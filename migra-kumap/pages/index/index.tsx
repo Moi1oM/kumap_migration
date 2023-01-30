@@ -17,6 +17,7 @@ import {
   modalPkState,
 } from "@/pages/constants/atom";
 const Home: NextPage = () => {
+  const [map, setMap] = useState<any>(/** @type google.maps.GoogleMap */ null);
   const libraries = useMemo(() => ["places"], []);
   const mapCenter = useMemo(() => ({ lat: 37.586175, lng: 127.029045 }), []);
   const [modalFirst, setModalFirst] = useRecoilState(modalState);
@@ -46,6 +47,7 @@ const Home: NextPage = () => {
     return <p>Loading...</p>;
   }
   const markerClicked = (e: any) => {
+    map.panTo({ lat: e.lat, lng: e.lng });
     console.log("e", e);
     setModalLat(e.lat);
     setModalLon(e.lng);
@@ -61,7 +63,7 @@ const Home: NextPage = () => {
         center={mapCenter}
         mapTypeId={google.maps.MapTypeId.ROADMAP}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
-        onLoad={() => console.log("Map Component Loaded...")}
+        onLoad={(map) => setMap(map)}
       >
         {sampleMarkers?.map((sampleMarker) => (
           <MarkerContainer key={sampleMarker.lat}>
