@@ -51,7 +51,7 @@ export default function FirstModal() {
   return (
     <>
       <S.ModalContainer>
-        <S.ModalCloseBtn src="modal/close_button.png" onClick={onClickClose} />
+        <S.ModalCloseBtn src="/modal/close_button.png" onClick={onClickClose} />
         <S.ModalH3>{name}</S.ModalH3>
         <S.ModalAddress></S.ModalAddress>
         <S.MainBtn>목적지 설정</S.MainBtn>
