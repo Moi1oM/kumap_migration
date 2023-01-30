@@ -1,4 +1,4 @@
-import { MarkerContainer } from "@/styles/entrance/style";
+import { BackMarker, MarkerContainer } from "@/styles/entrance/style";
 import {
   GoogleMap,
   Marker,
@@ -17,6 +17,7 @@ const Post = () => {
   const [entrances, setEntrances] = useState<any[]>();
   const [schoolj, setSchoolj] = useState();
   const [mapCenter, setMapCenter] = useState();
+  const [isMarkerLoaded, setIsMarkerLoaded] = useState(0);
   const router = useRouter();
   const { id } = router.query;
   const dataFetch = async () => {
@@ -62,6 +63,9 @@ const Post = () => {
   };
   console.log(name);
   console.log(entrances);
+  const arrowLeft = () => {
+    router.push("/index");
+  };
   return (
     <div>
       <GoogleMap
@@ -88,6 +92,7 @@ const Post = () => {
           </MarkerContainer>
         ))}
       </GoogleMap>
+      <BackMarker src="/modal/arrow_left.png" onClick={arrowLeft} />
     </div>
   );
 };
