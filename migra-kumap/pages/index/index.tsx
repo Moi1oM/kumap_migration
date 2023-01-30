@@ -41,7 +41,7 @@ const Home: NextPage = () => {
         mapContainerStyle={{ width: "100%", height: "100vh" }}
         onLoad={() => console.log("Map Component Loaded...")}
       >
-        <Marker
+        <MarkerF
           position={mapCenter}
           onLoad={() => console.log("Marker Loaded")}
           onClick={(e) => {
