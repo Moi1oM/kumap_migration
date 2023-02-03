@@ -1,6 +1,8 @@
 import Category from "@/components/Category";
 import { facilities, buildings, Building, Facility } from "@/src/data";
 import { useRecoilState } from "recoil";
+import { MarkerContainer } from "@/styles/entrance/style";
+
 import {
   useLoadScript,
   GoogleMap,
@@ -9,13 +11,35 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import type { NextPage } from "next";
+
 import { useMemo, useState, useEffect } from "react";
 import { All, AllBuilding, IsChoiceLoaded } from "../constants/atom";
 import { MarkerContainer } from "@/styles/entrance/style";
 
+import { useEffect, useMemo, useState } from "react";
+import axios from "axios";
+import FirstModal from "../components/FirstModal";
+import { useRecoilState } from "recoil";
+import {
+  modalState,
+  modalLatState,
+  modalLonState,
+  modalPkState,
+  modalSecondState,
+  modalThirdState,
+  searchFullState,
+  allBuildingState,
+} from "@/pages/constants/atom";
+import SecondModal from "../components/SecondModal";
+import ThirdModal from "../components/ThirdModal";
+import SearchBox from "@/pages/components/SearchBox";
+import SearchFull from "../components/SearchFull";
+
 const Home: NextPage = () => {
+  const [map, setMap] = useState<any>(/** @type google.maps.GoogleMap */ null);
   const libraries = useMemo(() => ["places"], []);
   const mapCenter = useMemo(() => ({ lat: 37.586175, lng: 127.029045 }), []);
+
   const [buildingdata, setBuildingdata] = useRecoilState(AllBuilding);
   const [activeCate, setActiveCate] = useRecoilState<string>(All);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
@@ -30,6 +54,20 @@ const Home: NextPage = () => {
     console.log(iconPath);
     console.log(isChosen);
   });
+
+  const [modalFirst, setModalFirst] = useRecoilState(modalState);
+  const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
+  const [modalThird, setModalThird] = useRecoilState(modalThirdState);
+  const [modalLat, setModalLat] = useRecoilState(modalLatState);
+  const [modalLon, setModalLon] = useRecoilState(modalLonState);
+  const [modalPk, setModalPk] = useRecoilState(modalPkState);
+  const [searchFull, setSearchFull] = useRecoilState(searchFullState);
+  const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
+  const sampleMarkers = [
+    { lat: 37.586262, lng: 127.027807, pk: 4 },
+    { lat: 37.586175, lng: 127.029045, pk: 28 },
+    { lat: 37.586296, lng: 127.030746, pk: 3 },
+  ];
 
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
@@ -48,8 +86,17 @@ const Home: NextPage = () => {
     return <p>Loading...</p>;
   }
   const markerClicked = (e: any) => {
-    console.log(e);
+    setModalSecond(false);
+    setModalThird(false);
+    map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
+    console.log("e", e);
+    setModalLat(e.fields.building_lat);
+    setModalLon(e.fields.building_lon);
+    setModalPk(e.pk);
+    setModalFirst(true);
   };
+
+  console.log("bulding", buildingList);
 
   return (
     <div>
@@ -60,7 +107,7 @@ const Home: NextPage = () => {
         center={mapCenter}
         mapTypeId={google.maps.MapTypeId.ROADMAP}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
-        onLoad={() => console.log("Map Component Loaded...")}
+        onLoad={(map) => setMap(map)}
       >
         <Category />
         {buildingdata?.map((choiceMarker) => (
@@ -82,7 +129,6 @@ const Home: NextPage = () => {
             )}
           </MarkerContainer>
         ))}
-
         <MarkerF
           position={mapCenter}
           onLoad={() => console.log("Marker Loaded")}
@@ -90,7 +136,27 @@ const Home: NextPage = () => {
             markerClicked(e);
           }}
         />
+
+        {searchFull && <SearchFull></SearchFull>}
+        <SearchBox></SearchBox>
+        {buildingList?.map((sampleMarker) => (
+          <MarkerContainer key={sampleMarker["pk"]}>
+            <MarkerF
+              position={{
+                lat: sampleMarker["fields"]["building_lat"],
+                lng: sampleMarker["fields"]["building_lon"],
+              }}
+              onLoad={() => console.log("Marker Loaded", sampleMarker)}
+              onClick={() => {
+                markerClicked(sampleMarker);
+              }}
+            />
+          </MarkerContainer>
+        ))}
       </GoogleMap>
+      {modalFirst && <FirstModal></FirstModal>}
+      {modalSecond && <SecondModal></SecondModal>}
+      {modalThird && <ThirdModal></ThirdModal>}
     </div>
   );
 };
