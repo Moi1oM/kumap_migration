@@ -1,4 +1,6 @@
 import { Container, ImageCont } from "styles/index/style";
+import { useRecoilState } from "recoil";
+
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,6 +12,7 @@ export default function Home() {
   }, []);
 
   const [value, setValue] = useState("");
+
   const router = useRouter();
   const onChange = (e: any) => {
     setValue(e.target.value);

@@ -12,6 +12,14 @@ const nextConfig = {
     config.resolve.fallback = { fs: false };
     return config;
   },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/:path*',
+  //       destination: 'http://ec2-13-209-3-104.ap-northeast-2.compute.amazonaws.com/detail_ajax/:path*',
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;
