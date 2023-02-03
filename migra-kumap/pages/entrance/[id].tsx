@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useRouter } from "next/router";
 import { json } from "stream/consumers";
 
 import { BackMarker, MarkerContainer } from "@/styles/entrance/style";
@@ -12,7 +10,6 @@ import {
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
->>>>>>> 187b2ad9e680e602164b54449fd19fa6e9d90dc2
 
 const Post = () => {
   const [name, setName] = useState();
@@ -60,11 +57,9 @@ const Post = () => {
     libraries: libraries as any,
   });
 
-
-
-  fetch('https:/ku-map.com/detail_ajax/2')
+  fetch("https:/ku-map.com/detail_ajax/2")
     .then((res) => res.json())
-    .then((data) => console.log(JSON.stringify(data)))
+    .then((data) => console.log(JSON.stringify(data)));
 
   // 2트 - 이건 그냥 다른 도메인으로 연결
   // axios.get('/api/2')

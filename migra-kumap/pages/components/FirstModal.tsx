@@ -25,6 +25,7 @@ export default function FirstModal() {
   const [modalPk, setModalPk] = useRecoilState(modalPkState);
   const [name, setName] = useRecoilState(modalBuildingNameState);
   const dataFetch = async () => {
+    console.log(modalPk);
     console.log(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${modalPk}`
     );

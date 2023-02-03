@@ -1,7 +1,5 @@
 import Category from "@/components/Category";
 import { facilities, buildings, Building, Facility } from "@/src/data";
-import { useRecoilState } from "recoil";
-import { MarkerContainer } from "@/styles/entrance/style";
 
 import {
   useLoadScript,
@@ -16,7 +14,6 @@ import { useMemo, useState, useEffect } from "react";
 import { All, AllBuilding, IsChoiceLoaded } from "../constants/atom";
 import { MarkerContainer } from "@/styles/entrance/style";
 
-import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import FirstModal from "../components/FirstModal";
 import { useRecoilState } from "recoil";
@@ -88,10 +85,10 @@ const Home: NextPage = () => {
   const markerClicked = (e: any) => {
     setModalSecond(false);
     setModalThird(false);
-    map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
+    // map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
     console.log("e", e);
-    setModalLat(e.fields.building_lat);
-    setModalLon(e.fields.building_lon);
+    // setModalLat(e.fields.building_lat);
+    // setModalLon(e.fields.building_lon);
     setModalPk(e.pk);
     setModalFirst(true);
   };
@@ -109,6 +106,16 @@ const Home: NextPage = () => {
         mapContainerStyle={{ width: "100%", height: "100vh" }}
         onLoad={(map) => setMap(map)}
       >
+        <MarkerF
+          position={mapCenter}
+          onLoad={() => console.log("Marker Loaded")}
+          onClick={(e) => {
+            markerClicked(e);
+          }}
+        />
+
+        {searchFull && <SearchFull></SearchFull>}
+        <SearchBox></SearchBox>
         <Category />
         {buildingdata?.map((choiceMarker) => (
           <MarkerContainer key={choiceMarker["id"]}>
@@ -129,16 +136,6 @@ const Home: NextPage = () => {
             )}
           </MarkerContainer>
         ))}
-        <MarkerF
-          position={mapCenter}
-          onLoad={() => console.log("Marker Loaded")}
-          onClick={(e) => {
-            markerClicked(e);
-          }}
-        />
-
-        {searchFull && <SearchFull></SearchFull>}
-        <SearchBox></SearchBox>
         {buildingList?.map((sampleMarker) => (
           <MarkerContainer key={sampleMarker["pk"]}>
             <MarkerF

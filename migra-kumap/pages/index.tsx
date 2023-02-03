@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useRecoilState } from "recoil";
 import { allBuildingState } from "./constants/atom";
 
 export default function Home() {
@@ -32,9 +31,6 @@ export default function Home() {
     dataFetch();
   }, []);
 
-  const [value, setValue] = useState("");
-
-  const router = useRouter();
   const onChange = (e: any) => {
     setValue(e.target.value);
   };

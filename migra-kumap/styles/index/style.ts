@@ -35,7 +35,7 @@ export const CategoryBtn = styled.button<{ isActive: boolean }>`
 
 export const CategoryBox = styled.div`
   position: absolute;
-  top: 60px;
+  top: 95px;
   left: 0px;
 
   display: inline-block;
@@ -43,15 +43,13 @@ export const CategoryBox = styled.div`
   overflow: auto;
   z-index: 10;
 
-  width: 90%;
+  width: 86%;
   height: 40px;
 
-  left: 5%;
-  right: 5%;
+  left: 7%;
+  right: 7%;
 
   &::-webkit-scrollbar {
     display: none;
   }
-
-  background-color: mintcream;
 `;
