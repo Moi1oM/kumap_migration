@@ -4,15 +4,17 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import {
   allBuildingState,
+  fromModalPkState,
   mapState,
   modalPkState,
   modalSecondState,
   modalState,
   modalThirdState,
   searchFullState,
+  secondSearchState,
 } from "../constants/atom";
 
-export default function SearchFull() {
+export default function SecondSearchFull() {
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
   const [fullBuildingList, setFullBuildingList] = useState<any[]>([]);
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
@@ -20,17 +22,19 @@ export default function SearchFull() {
   const [modalFirst, setModalFirst] = useRecoilState(modalState);
   const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
   const [modalThird, setModalThird] = useRecoilState(modalThirdState);
-  const [map, setMap] = useState<any>("");
   const [modalPk, setModalPk] = useRecoilState(modalPkState);
+  const [secondSearchFull, setSecondSearchFull] =
+    useRecoilState(secondSearchState);
+  const [fromModalPk, setFromModalPk] = useRecoilState(fromModalPkState);
 
   const dataFetch = async () => {
     await axios
       .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/building_list`)
       .then(function (res) {
         const { data } = res;
-        console.log("searchfull", data);
+        // console.log("searchfull", data);
         const buliding_info = JSON.parse(data.building);
-        console.log("buliding_info", buliding_info);
+        // console.log("buliding_info", buliding_info);
         setBuildingList(buliding_info);
         setFullBuildingList(buliding_info);
       })
@@ -38,11 +42,8 @@ export default function SearchFull() {
         console.log("에러", err);
       });
   };
-  useEffect(() => {
-    dataFetch();
-  }, []);
   const closeSearchFull = () => {
-    setSearchFull(false);
+    setSecondSearchFull(false);
   };
   useEffect(() => {
     let newBulidings: any[] = [];
@@ -60,13 +61,10 @@ export default function SearchFull() {
   };
 
   const moveToFirstModal = (b: any) => {
-    console.log("hihi", b);
-    setModalSecond(false);
-    setModalThird(false);
-    //map.panTo({ lat: b.fields.building_lat, lng: b.fields.building_lon });
-    setModalPk(b.pk);
-    setModalFirst(true);
-    setSearchFull(false);
+    // console.log("b", b);
+    setSecondSearchFull(false);
+    setFromModalPk(b.pk);
+    //    map.panTo({ lat: b.fields.building_lat, lng: b.fields.building_lon });
   };
 
   return (

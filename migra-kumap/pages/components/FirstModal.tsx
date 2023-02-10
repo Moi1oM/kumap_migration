@@ -7,6 +7,7 @@ import {
   modalPkState,
   modalSecondState,
   modalBuildingNameState,
+  modalThirdState,
 } from "@/pages/constants/atom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -17,6 +18,7 @@ export default function FirstModal() {
   const [modal, setModal] = useRecoilState(modalState);
   const [modalFirst, setModalFirst] = useRecoilState(modalState);
   const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
+  const [modalThird, setModalThird] = useRecoilState(modalThirdState);
   const onClickClose = () => {
     setName("");
     setModal(!modal);
@@ -25,15 +27,15 @@ export default function FirstModal() {
   const [modalPk, setModalPk] = useRecoilState(modalPkState);
   const [name, setName] = useRecoilState(modalBuildingNameState);
   const dataFetch = async () => {
-    console.log(modalPk);
-    console.log(
-      `${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${modalPk}`
-    );
+    //console.log(modalPk);
+    // console.log(
+    //   `${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${modalPk}`
+    // );
     await axios
       .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${modalPk}`)
       .then(function (res) {
-        console.log(res);
-        console.log(res.data.name);
+        // console.log(res);
+        // console.log(res.data.name);
         setName(res.data.name);
       })
       .catch((err) => {

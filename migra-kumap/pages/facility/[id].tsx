@@ -22,8 +22,8 @@ const Post = () => {
         const { data } = res;
         const building = JSON.parse(data.building);
         const facilitie = JSON.parse(data.facilities);
-        console.log("buliding", building);
-        console.log("faciliites", facilitie);
+        // console.log("buliding", building);
+        // console.log("faciliites", facilitie);
         setName(building[0].fields.building_name);
         setHistory(building[0].fields.history);
         setFacilities(facilitie);

@@ -11,7 +11,14 @@ import {
 import type { NextPage } from "next";
 
 import { useMemo, useState, useEffect } from "react";
-import { All, AllBuilding, IsChoiceLoaded } from "../constants/atom";
+import {
+  All,
+  AllBuilding,
+  IsChoiceLoaded,
+  fromModalPkState,
+  mapState,
+  secondSearchState,
+} from "../constants/atom";
 import { MarkerContainer } from "@/styles/entrance/style";
 
 import axios from "axios";
@@ -31,9 +38,10 @@ import SecondModal from "../components/SecondModal";
 import ThirdModal from "../components/ThirdModal";
 import SearchBox from "@/pages/components/SearchBox";
 import SearchFull from "../components/SearchFull";
+import SecondSearchFull from "../components/SecondSearchFull";
 
 const Home: NextPage = () => {
-  const [map, setMap] = useState<any>(/** @type google.maps.GoogleMap */ null);
+  const [map, setMap] = useState<any>(/** @type google.mpas.GoogleMap */ "");
   const libraries = useMemo(() => ["places"], []);
   const mapCenter = useMemo(() => ({ lat: 37.586175, lng: 127.029045 }), []);
 
@@ -58,7 +66,10 @@ const Home: NextPage = () => {
   const [modalLat, setModalLat] = useRecoilState(modalLatState);
   const [modalLon, setModalLon] = useRecoilState(modalLonState);
   const [modalPk, setModalPk] = useRecoilState(modalPkState);
+  const [fromModalPk, setFromModalPk] = useRecoilState(fromModalPkState);
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
+  const [secondSearchFull, setSecondSearchFull] =
+    useRecoilState(secondSearchState);
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
   const sampleMarkers = [
     { lat: 37.586262, lng: 127.027807, pk: 4 },
@@ -85,7 +96,7 @@ const Home: NextPage = () => {
   const markerClicked = (e: any) => {
     setModalSecond(false);
     setModalThird(false);
-    // map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
+    map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
     console.log("e", e);
     // setModalLat(e.fields.building_lat);
     // setModalLon(e.fields.building_lon);
@@ -106,15 +117,8 @@ const Home: NextPage = () => {
         mapContainerStyle={{ width: "100%", height: "100vh" }}
         onLoad={(map) => setMap(map)}
       >
-        <MarkerF
-          position={mapCenter}
-          onLoad={() => console.log("Marker Loaded")}
-          onClick={(e) => {
-            markerClicked(e);
-          }}
-        />
-
         {searchFull && <SearchFull></SearchFull>}
+        {secondSearchFull && <SecondSearchFull></SecondSearchFull>}
         <SearchBox></SearchBox>
         <Category />
         {buildingdata?.map((choiceMarker) => (

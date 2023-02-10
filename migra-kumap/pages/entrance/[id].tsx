@@ -26,7 +26,7 @@ const Post = () => {
     await axios
       .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/entrance/${pk}`)
       .then(function (res) {
-        console.log(res);
+        // console.log(res);
         setName(res.data.buildingName);
         setLat(res.data.building_lat);
         setLon(res.data.building_lon);
@@ -57,25 +57,21 @@ const Post = () => {
     libraries: libraries as any,
   });
 
-  fetch("https:/ku-map.com/detail_ajax/2")
-    .then((res) => res.json())
-    .then((data) => console.log(JSON.stringify(data)));
-
   // 2트 - 이건 그냥 다른 도메인으로 연결
   // axios.get('/api/2')
   //   .then(res => {
   //     console.log(res.data)
   //   })
 
-  return <p>Entrance: {id}</p>;
+  //return <p>Entrance: {id}</p>;
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
   const markerClicked = (e: any) => {
     console.log(e);
   };
-  console.log(name);
-  console.log(entrances);
+  // console.log(name);
+  // console.log(entrances);
   const arrowLeft = () => {
     router.push("/index");
   };

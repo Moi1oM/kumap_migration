@@ -18,9 +18,9 @@ export default function Home() {
       .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/building_list`)
       .then(function (res) {
         const { data } = res;
-        console.log("searchfull", data);
+        //console.log("searchfull", data);
         const buliding_info = JSON.parse(data.building);
-        console.log("buliding_info", buliding_info);
+        //console.log("buliding_info", buliding_info);
         setBuildingList(buliding_info);
       })
       .catch((err) => {

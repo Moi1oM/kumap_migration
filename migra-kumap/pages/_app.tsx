@@ -20,6 +20,9 @@ export default function App({ Component, pageProps }: AppProps) {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet"
         />
+        {/* <script
+          src={`https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${process.env.NEXT_PUBLIC_SK_APIKEY}`}
+        ></script> */}
       </Head>
       <GlobalStyle>
         <Component {...pageProps} />

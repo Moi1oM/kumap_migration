@@ -60,3 +60,18 @@ export const allBuildingState = atom({
   key: "allbuilding",
   default: [],
 });
+
+export const mapState = atom({
+  key: "map",
+  default: null,
+});
+
+export const secondSearchState = atom({
+  key: "secondSearch",
+  default: false,
+});
+
+export const fromModalPkState = atom({
+  key: "fromModalPk",
+  default: null,
+});
