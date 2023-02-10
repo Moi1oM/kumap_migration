@@ -75,3 +75,8 @@ export const fromModalPkState = atom({
   key: "fromModalPk",
   default: null,
 });
+
+export const AllFacilityState = atom({
+  key: "allfacility",
+  default: [],
+});

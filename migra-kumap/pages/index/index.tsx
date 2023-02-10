@@ -33,19 +33,20 @@ import {
   modalThirdState,
   searchFullState,
   allBuildingState,
+  AllFacilityState,
 } from "@/pages/constants/atom";
 import SecondModal from "../components/SecondModal";
 import ThirdModal from "../components/ThirdModal";
 import SearchBox from "@/pages/components/SearchBox";
 import SearchFull from "../components/SearchFull";
 import SecondSearchFull from "../components/SecondSearchFull";
+import { choice } from "@/styles/index/SearchFull";
 
 const Home: NextPage = () => {
   const [map, setMap] = useState<any>(/** @type google.mpas.GoogleMap */ "");
   const libraries = useMemo(() => ["places"], []);
   const mapCenter = useMemo(() => ({ lat: 37.586175, lng: 127.029045 }), []);
 
-  const [buildingdata, setBuildingdata] = useRecoilState(AllBuilding);
   const [activeCate, setActiveCate] = useRecoilState<string>(All);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
 
@@ -71,11 +72,23 @@ const Home: NextPage = () => {
   const [secondSearchFull, setSecondSearchFull] =
     useRecoilState(secondSearchState);
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
-  const sampleMarkers = [
-    { lat: 37.586262, lng: 127.027807, pk: 4 },
-    { lat: 37.586175, lng: 127.029045, pk: 28 },
-    { lat: 37.586296, lng: 127.030746, pk: 3 },
-  ];
+  const [facilities, setFacilities] = useRecoilState(AllFacilityState);
+
+  const dataFetch = async () => {
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/facility_list`)
+      .then(function (res) {
+        const { data } = res;
+        const facility_info = JSON.parse(data.facility);
+        setFacilities(facility_info);
+      })
+      .catch((err) => {
+        console.log("에러", err);
+      });
+  };
+  useEffect(() => {
+    dataFetch();
+  }, []);
 
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
@@ -97,14 +110,13 @@ const Home: NextPage = () => {
     setModalSecond(false);
     setModalThird(false);
     map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
-    console.log("e", e);
-    // setModalLat(e.fields.building_lat);
     // setModalLon(e.fields.building_lon);
     setModalPk(e.pk);
     setModalFirst(true);
   };
 
-  console.log("bulding", buildingList);
+  console.log("facility", facilities);
+  console.log("building", buildingList);
 
   return (
     <div>
@@ -121,26 +133,8 @@ const Home: NextPage = () => {
         {secondSearchFull && <SecondSearchFull></SecondSearchFull>}
         <SearchBox></SearchBox>
         <Category />
-        {buildingdata?.map((choiceMarker) => (
-          <MarkerContainer key={choiceMarker["id"]}>
-            {!isChosen && (
-              <MarkerF
-                icon={iconPath}
-                // icon = {"/category/" + activeCate + ".png"}
-                // icon={"/category/cafe.png"}
-                position={{
-                  lat: choiceMarker["lat"],
-                  lng: choiceMarker["lng"],
-                }}
-                onLoad={() => console.log("Marker Loaded", choiceMarker)}
-                onClick={() => {
-                  markerClicked(choiceMarker);
-                }}
-              />
-            )}
-          </MarkerContainer>
-        ))}
-        {buildingList?.map((sampleMarker) => (
+
+        {/* {buildingList?.map((sampleMarker) => (
           <MarkerContainer key={sampleMarker["pk"]}>
             <MarkerF
               position={{
@@ -152,6 +146,25 @@ const Home: NextPage = () => {
                 markerClicked(sampleMarker);
               }}
             />
+          </MarkerContainer>
+        ))} */}
+        {buildingList?.map((choiceMarker) => (
+          <MarkerContainer key={choiceMarker["pk"]}>
+            {!isChosen && (
+              <MarkerF
+                icon={iconPath}
+                // icon = {"/category/" + activeCate + ".png"}
+                // icon={"/category/cafe.png"}
+                position={{
+                  lat: choiceMarker["fields"]["building_lat"],
+                  lng: choiceMarker["fields"]["building_lon"],
+                }}
+                onLoad={() => console.log("Marker Loaded", choiceMarker)}
+                onClick={() => {
+                  markerClicked(choiceMarker);
+                }}
+              />
+            )}
           </MarkerContainer>
         ))}
       </GoogleMap>

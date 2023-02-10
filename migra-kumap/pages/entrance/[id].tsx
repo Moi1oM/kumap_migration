@@ -56,14 +56,6 @@ const Post = () => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLEMAPAPIKEY as string,
     libraries: libraries as any,
   });
-
-  // 2트 - 이건 그냥 다른 도메인으로 연결
-  // axios.get('/api/2')
-  //   .then(res => {
-  //     console.log(res.data)
-  //   })
-
-  //return <p>Entrance: {id}</p>;
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
