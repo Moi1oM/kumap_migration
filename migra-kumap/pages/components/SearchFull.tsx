@@ -12,7 +12,7 @@ import {
   searchFullState,
 } from "../constants/atom";
 
-export default function SearchFull() {
+export default function SearchFull({ indexMap }: { indexMap: any }) {
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
   const [fullBuildingList, setFullBuildingList] = useState<any[]>([]);
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
@@ -28,9 +28,9 @@ export default function SearchFull() {
       .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/building_list`)
       .then(function (res) {
         const { data } = res;
-        console.log("searchfull", data);
+        //console.log("searchfull", data);
         const buliding_info = JSON.parse(data.building);
-        console.log("buliding_info", buliding_info);
+        // console.log("buliding_info", buliding_info);
         setBuildingList(buliding_info);
         setFullBuildingList(buliding_info);
       })
@@ -60,10 +60,10 @@ export default function SearchFull() {
   };
 
   const moveToFirstModal = (b: any) => {
-    console.log("hihi", b);
+    // console.log("hihi", b);
     setModalSecond(false);
     setModalThird(false);
-    //map.panTo({ lat: b.fields.building_lat, lng: b.fields.building_lon });
+    indexMap.panTo({ lat: b.fields.building_lat, lng: b.fields.building_lon });
     setModalPk(b.pk);
     setModalFirst(true);
     setSearchFull(false);

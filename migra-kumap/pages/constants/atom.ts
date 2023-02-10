@@ -80,3 +80,8 @@ export const AllFacilityState = atom({
   key: "allfacility",
   default: [],
 });
+
+export const indexMapState = atom({
+  key: "indexMap",
+  default: null,
+});

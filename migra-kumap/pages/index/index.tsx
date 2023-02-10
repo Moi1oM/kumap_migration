@@ -16,6 +16,7 @@ import {
   AllBuilding,
   IsChoiceLoaded,
   fromModalPkState,
+  indexMapState,
   mapState,
   secondSearchState,
 } from "../constants/atom";
@@ -43,7 +44,10 @@ import SecondSearchFull from "../components/SecondSearchFull";
 import { choice } from "@/styles/index/SearchFull";
 
 const Home: NextPage = () => {
-  const [map, setMap] = useState<any>(/** @type google.mpas.GoogleMap */ "");
+  const [map, setMap] = useState<any>(
+    /** @type google.mpas.GoogleMap */ //indexMapState
+    null
+  );
   const libraries = useMemo(() => ["places"], []);
   const mapCenter = useMemo(() => ({ lat: 37.586175, lng: 127.029045 }), []);
 
@@ -127,9 +131,12 @@ const Home: NextPage = () => {
         center={mapCenter}
         mapTypeId={google.maps.MapTypeId.ROADMAP}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
-        onLoad={(map) => setMap(map)}
+        onLoad={(indexMap) => {
+          console.log("googleMap", indexMap);
+          setMap(indexMap);
+        }}
       >
-        {searchFull && <SearchFull></SearchFull>}
+        {searchFull && <SearchFull indexMap={map}></SearchFull>}
         {secondSearchFull && <SecondSearchFull></SecondSearchFull>}
         <SearchBox></SearchBox>
         <Category />
