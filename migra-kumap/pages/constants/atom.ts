@@ -60,3 +60,8 @@ export const allBuildingState = atom({
   key: "allbuilding",
   default: [],
 });
+
+export const AllFacilityState = atom({
+  key: "allfacility",
+  default: [],
+});

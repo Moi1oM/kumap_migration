@@ -57,17 +57,7 @@ const Post = () => {
     libraries: libraries as any,
   });
 
-  fetch("https:/ku-map.com/detail_ajax/2")
-    .then((res) => res.json())
-    .then((data) => console.log(JSON.stringify(data)));
-
-  // 2트 - 이건 그냥 다른 도메인으로 연결
-  // axios.get('/api/2')
-  //   .then(res => {
-  //     console.log(res.data)
-  //   })
-
-  return <p>Entrance: {id}</p>;
+  // return <p>Entrance: {id}</p>;
   if (!isLoaded) {
     return <p>Loading...</p>;
   }

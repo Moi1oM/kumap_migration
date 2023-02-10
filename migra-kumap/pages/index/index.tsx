@@ -11,7 +11,12 @@ import {
 import type { NextPage } from "next";
 
 import { useMemo, useState, useEffect } from "react";
-import { All, AllBuilding, IsChoiceLoaded } from "../constants/atom";
+import {
+  All,
+  AllBuilding,
+  AllFacilityState,
+  IsChoiceLoaded,
+} from "../constants/atom";
 import { MarkerContainer } from "@/styles/entrance/style";
 
 import axios from "axios";
@@ -31,13 +36,13 @@ import SecondModal from "../components/SecondModal";
 import ThirdModal from "../components/ThirdModal";
 import SearchBox from "@/pages/components/SearchBox";
 import SearchFull from "../components/SearchFull";
+import { choice } from "@/styles/index/SearchFull";
 
 const Home: NextPage = () => {
   const [map, setMap] = useState<any>(/** @type google.maps.GoogleMap */ null);
   const libraries = useMemo(() => ["places"], []);
   const mapCenter = useMemo(() => ({ lat: 37.586175, lng: 127.029045 }), []);
 
-  const [buildingdata, setBuildingdata] = useRecoilState(AllBuilding);
   const [activeCate, setActiveCate] = useRecoilState<string>(All);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
 
@@ -59,12 +64,15 @@ const Home: NextPage = () => {
   const [modalLon, setModalLon] = useRecoilState(modalLonState);
   const [modalPk, setModalPk] = useRecoilState(modalPkState);
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
+
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
-  const sampleMarkers = [
-    { lat: 37.586262, lng: 127.027807, pk: 4 },
-    { lat: 37.586175, lng: 127.029045, pk: 28 },
-    { lat: 37.586296, lng: 127.030746, pk: 3 },
-  ];
+  const [facilities, setFacilities] = useRecoilState(AllFacilityState);
+
+  // const sampleMarkers = [
+  //   { lat: 37.586262, lng: 127.027807, pk: 4 },
+  //   { lat: 37.586175, lng: 127.029045, pk: 28 },
+  //   { lat: 37.586296, lng: 127.030746, pk: 3 },
+  // ];
 
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
@@ -85,15 +93,15 @@ const Home: NextPage = () => {
   const markerClicked = (e: any) => {
     setModalSecond(false);
     setModalThird(false);
-    // map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
-    console.log("e", e);
-    // setModalLat(e.fields.building_lat);
+    map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
+    console.log("e", e, "얍");
     // setModalLon(e.fields.building_lon);
     setModalPk(e.pk);
     setModalFirst(true);
   };
 
-  console.log("bulding", buildingList);
+  console.log("facility", facilities);
+  console.log("building", buildingList);
 
   return (
     <div>
@@ -117,25 +125,7 @@ const Home: NextPage = () => {
         {searchFull && <SearchFull></SearchFull>}
         <SearchBox></SearchBox>
         <Category />
-        {buildingdata?.map((choiceMarker) => (
-          <MarkerContainer key={choiceMarker["id"]}>
-            {!isChosen && (
-              <MarkerF
-                icon={iconPath}
-                // icon = {"/category/" + activeCate + ".png"}
-                // icon={"/category/cafe.png"}
-                position={{
-                  lat: choiceMarker["lat"],
-                  lng: choiceMarker["lng"],
-                }}
-                onLoad={() => console.log("Marker Loaded", choiceMarker)}
-                onClick={() => {
-                  markerClicked(choiceMarker);
-                }}
-              />
-            )}
-          </MarkerContainer>
-        ))}
+
         {buildingList?.map((sampleMarker) => (
           <MarkerContainer key={sampleMarker["pk"]}>
             <MarkerF

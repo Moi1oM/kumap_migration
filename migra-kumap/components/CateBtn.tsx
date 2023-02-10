@@ -1,4 +1,8 @@
-import { AllBuilding, IsChoiceLoaded } from "@/pages/constants/atom";
+import {
+  AllBuilding,
+  allBuildingState,
+  IsChoiceLoaded,
+} from "@/pages/constants/atom";
 import { Building, Facility, buildings, facilities } from "@/src/data";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -21,30 +25,30 @@ export default function CateBtn({
   handleCate,
   iconpath,
 }: propsType) {
-  const [buildingdata, setBuildingData] =
-    useRecoilState<Building[]>(AllBuilding);
+  const [buildingList, setBuidlingList] = useRecoilState(allBuildingState);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
 
-  /* 카테고리 버튼에 따라 마커 띄우기 */
-
-  const filterCate = (facilitylist: Facility[], choice: string) => {
+  /* 카테고리 버튼에 따라 마커 띄우는 함수 */
+  const filterCate = (facilityList: any, choice: string) => {
     //버튼에서 활성화된 카테고리에 해당하는 ""시설"" 객체 담은 배열
-    const temp = facilitylist.filter((item) => item.category === choice);
-    //console.log(temp, "활성화된 카테고리의 시설 객체를 담은 배열")
+    // const temp = facilityList.filter((item: any) => item.category === choice);
+    // console.log(facilityList, "확인");
+    // console.log(temp, "활성화된 카테고리의 시설 객체를 담은 배열");
 
     // 그 시설들이 소속되어 있는 ""건물"" 객체 배열
-    const selected_buildings: Building[] = [];
+    const selected_buildings: any = [];
 
-    for (let i in temp) {
-      buildings.map((item) => {
-        if (item.name === temp[i].building) {
-          selected_buildings.push(item);
-        }
-      });
-    }
+    // for (let i in temp) {
+    //   buildingList.map((item) => {
+    //     // if (item.name === temp[i].building) {
+    //     //   selected_buildings.push(item);
+    //     // }
+    //   });
+    // }
 
     console.log(selected_buildings, choice, "그 시설들이 위치한 건물");
-    setBuildingData(selected_buildings);
+    // setBuildingData(selected_buildings);
+    setBuidlingList(selected_buildings);
   };
 
   return (

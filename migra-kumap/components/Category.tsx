@@ -16,13 +16,13 @@ export default function Category({ parentFunction }: any) {
       </header>
       <S.CategoryBox>
         <article className="categories">
-          <CateBtn
+          {/* <CateBtn
             name="All"
             category="All"
             isActive={activeCate === "All" ? true : false}
             handleCate={setActiveCate}
             iconpath="/category/basic.png"
-          />
+          /> */}
           <CateBtn
             name="카페"
             category="cafe"
