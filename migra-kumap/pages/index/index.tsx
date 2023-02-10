@@ -11,12 +11,7 @@ import {
 import type { NextPage } from "next";
 
 import { useMemo, useState, useEffect } from "react";
-import {
-  All,
-  AllBuilding,
-  AllFacilityState,
-  IsChoiceLoaded,
-} from "../constants/atom";
+import { All, AllBuilding, IsChoiceLoaded } from "../constants/atom";
 import { MarkerContainer } from "@/styles/entrance/style";
 
 import axios from "axios";
@@ -31,6 +26,7 @@ import {
   modalThirdState,
   searchFullState,
   allBuildingState,
+  AllFacilityState,
 } from "@/pages/constants/atom";
 import SecondModal from "../components/SecondModal";
 import ThirdModal from "../components/ThirdModal";
@@ -68,11 +64,21 @@ const Home: NextPage = () => {
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
   const [facilities, setFacilities] = useRecoilState(AllFacilityState);
 
-  // const sampleMarkers = [
-  //   { lat: 37.586262, lng: 127.027807, pk: 4 },
-  //   { lat: 37.586175, lng: 127.029045, pk: 28 },
-  //   { lat: 37.586296, lng: 127.030746, pk: 3 },
-  // ];
+  const dataFetch = async () => {
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/facility_list`)
+      .then(function (res) {
+        const { data } = res;
+        const facility_info = JSON.parse(data.facility);
+        setFacilities(facility_info);
+      })
+      .catch((err) => {
+        console.log("에러", err);
+      });
+  };
+  useEffect(() => {
+    dataFetch();
+  }, []);
 
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
@@ -126,7 +132,7 @@ const Home: NextPage = () => {
         <SearchBox></SearchBox>
         <Category />
 
-        {buildingList?.map((sampleMarker) => (
+        {/* {buildingList?.map((sampleMarker) => (
           <MarkerContainer key={sampleMarker["pk"]}>
             <MarkerF
               position={{
@@ -138,6 +144,25 @@ const Home: NextPage = () => {
                 markerClicked(sampleMarker);
               }}
             />
+          </MarkerContainer>
+        ))} */}
+        {buildingList?.map((choiceMarker) => (
+          <MarkerContainer key={choiceMarker["pk"]}>
+            {!isChosen && (
+              <MarkerF
+                icon={iconPath}
+                // icon = {"/category/" + activeCate + ".png"}
+                // icon={"/category/cafe.png"}
+                position={{
+                  lat: choiceMarker["fields"]["building_lat"],
+                  lng: choiceMarker["fields"]["building_lon"],
+                }}
+                onLoad={() => console.log("Marker Loaded", choiceMarker)}
+                onClick={() => {
+                  markerClicked(choiceMarker);
+                }}
+              />
+            )}
           </MarkerContainer>
         ))}
       </GoogleMap>

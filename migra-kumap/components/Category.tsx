@@ -32,10 +32,10 @@ export default function Category({ parentFunction }: any) {
           />
           <CateBtn
             name="스터디"
-            category="study"
-            isActive={activeCate === "study" ? true : false}
+            category="lounge"
+            isActive={activeCate === "lounge" ? true : false}
             handleCate={setActiveCate}
-            iconpath="/category/studyicon.png"
+            iconpath="/category/loungeicon.png"
           />
           <CateBtn
             name="식당"
@@ -49,12 +49,12 @@ export default function Category({ parentFunction }: any) {
             category="one-stop"
             isActive={activeCate === "one-stop" ? true : false}
             handleCate={setActiveCate}
-            iconpath="/category/one-stopicon.png"
+            iconpath="/category/coolicon.png"
           />
           <CateBtn
             name="책반납기"
-            category="book-return"
-            isActive={activeCate === "book-return" ? true : false}
+            category="book_return"
+            isActive={activeCate === "book_return" ? true : false}
             handleCate={setActiveCate}
             iconpath="/category/coolicon.png"
           />
