@@ -19,6 +19,7 @@ export default function FirstModal() {
   const [modalFirst, setModalFirst] = useRecoilState(modalState);
   const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
   const [modalThird, setModalThird] = useRecoilState(modalThirdState);
+
   const onClickClose = () => {
     setName("");
     setModal(!modal);

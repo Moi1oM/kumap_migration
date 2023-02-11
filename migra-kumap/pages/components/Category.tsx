@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { All } from "@/pages/constants/atom";
-import { facilities, buildings, Building, Facility } from "@/src/data";
-import { useRecoilState } from "recoil";
-import * as S from "../styles/index/style";
 import CateBtn from "./CateBtn";
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { All } from "@/pages/constants/atom";
+import * as S from "../../styles/index/style";
 
 export default function Category({ parentFunction }: any) {
   const [activeCate, setActiveCate] = useRecoilState<string>(All);

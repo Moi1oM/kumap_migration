@@ -1,18 +1,16 @@
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { useEffect } from "react";
+
+import styled from "styled-components";
+import * as S from "../../styles/index/style";
+
 import {
   allBuildingState,
   AllFacilityState,
   cateBuildingState,
   IsChoiceLoaded,
 } from "@/pages/constants/atom";
-import { Building, Facility, buildings, facilities } from "@/src/data";
-import { useRecoilState } from "recoil";
-import { useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import * as S from "../styles/index/style";
-import build from "next/dist/build";
-
-// type functionA = (param: string) => string;
 
 interface propsType {
   name: string;
@@ -31,9 +29,11 @@ export default function CateBtn({
 }: propsType) {
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
   const [cateBuilding, setCateBuilding] = useRecoilState(cateBuildingState);
+
   const [facilities, setFacilities] = useRecoilState(AllFacilityState);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
 
+  /*-- 데이터 받아오기 --*/
   const api_urls = [
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/building_list`,
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/facility_list`,
@@ -61,25 +61,27 @@ export default function CateBtn({
     dataFetch();
   }, []);
 
-  /* 카테고리 버튼에 따라 마커 띄우는 함수 */
+  /*-- 선택된 카테고리에 맞게 건물 필터링 후 반환 --*/
   const filterCate = (facilityList: any, choice: string) => {
-    //버튼에서 활성화된 카테고리에 해당하는 ""시설"" 객체 담은 배열
+    //카테고리에 맞는 시설 필터링
     const temp = facilityList.filter(
       (item: any) => item.fields.category === choice
     );
-    console.log(temp, "활성화된 카테고리의 시설 객체를 담은 배열");
-    // 그 시설들이 소속되어 있는 ""건물"" 객체 배열
+    //console.log('활성화된 카테고리의 시설들', temp);
 
+    //해당 시설들이 있는 건물pk 배열
     let facility_in: Array<number> = [];
+    //해당 건물 담는 배열
+    let selected_buildings: any = [];
+
     for (let i in temp) {
       facility_in.push(temp[i]["fields"]["building_id"]);
     }
 
     facility_in = Array.from(new Set(facility_in));
-    console.log(facility_in, "잘 필터링됐나");
+    //console.log("중복 없이 필터링 확인", facility_in);
 
-    let selected_buildings: any = [];
-
+    //pk기준으로 필터링
     for (let i in facility_in) {
       buildingList.map((item: any) => {
         if (item["pk"] === facility_in[i]) {
@@ -88,8 +90,7 @@ export default function CateBtn({
       });
     }
 
-    console.log(selected_buildings, choice, "그 시설들이 위치한 건물");
-    // setBuildingData(selected_buildings);
+    //console.log(selected_buildings, choice, "그 시설들이 위치한 건물");
     setCateBuilding(selected_buildings);
   };
 

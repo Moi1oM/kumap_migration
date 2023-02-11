@@ -1,4 +1,18 @@
-import Category from "@/components/Category";
+import FirstModal from "../components/FirstModal";
+import SecondModal from "../components/SecondModal";
+import ThirdModal from "../components/ThirdModal";
+import SearchBox from "@/pages/components/SearchBox";
+import SearchFull from "../components/SearchFull";
+import SecondSearchFull from "../components/SecondSearchFull";
+import Category from "@/pages/components/Category";
+
+import { choice } from "@/styles/index/SearchFull";
+import { MarkerContainer } from "@/styles/entrance/style";
+
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import type { NextPage } from "next";
+import { useMemo, useState, useEffect } from "react";
 
 import {
   useLoadScript,
@@ -7,9 +21,7 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import type { NextPage } from "next";
 
-import { useMemo, useState, useEffect } from "react";
 import {
   All,
   IsChoiceLoaded,
@@ -18,13 +30,6 @@ import {
   mapState,
   secondSearchState,
   cateBuildingState,
-} from "../constants/atom";
-import { MarkerContainer } from "@/styles/entrance/style";
-
-import axios from "axios";
-import FirstModal from "../components/FirstModal";
-import { useRecoilState } from "recoil";
-import {
   modalState,
   modalLatState,
   modalLonState,
@@ -34,13 +39,7 @@ import {
   searchFullState,
   allBuildingState,
   AllFacilityState,
-} from "@/pages/constants/atom";
-import SecondModal from "../components/SecondModal";
-import ThirdModal from "../components/ThirdModal";
-import SearchBox from "@/pages/components/SearchBox";
-import SearchFull from "../components/SearchFull";
-import SecondSearchFull from "../components/SecondSearchFull";
-import { choice } from "@/styles/index/SearchFull";
+} from "../constants/atom";
 
 const Home: NextPage = () => {
   const [map, setMap] = useState<any>(
@@ -50,20 +49,20 @@ const Home: NextPage = () => {
   const libraries = useMemo(() => ["places"], []);
   const mapCenter = useMemo(() => ({ lat: 37.586175, lng: 127.029045 }), []);
 
+  /*-- 카테고리 마커 관리 --*/
   const [activeCate, setActiveCate] = useRecoilState<string>(All);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
-
-  /* 카테고리 마커 관리 */
   const iconPath = `/category/${activeCate}.png`;
 
   useEffect(() => {
     {
       iconPath && setisChosen(false);
     }
-    console.log(iconPath);
-    console.log(isChosen);
+    // console.log(iconPath);
+    // console.log(isChosen);
   });
 
+  /*-- 모달 관리 --*/
   const [modalFirst, setModalFirst] = useRecoilState(modalState);
   const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
   const [modalThird, setModalThird] = useRecoilState(modalThirdState);
@@ -71,29 +70,18 @@ const Home: NextPage = () => {
   const [modalLon, setModalLon] = useRecoilState(modalLonState);
   const [modalPk, setModalPk] = useRecoilState(modalPkState);
   const [fromModalPk, setFromModalPk] = useRecoilState(fromModalPkState);
+
+  /*-- 검색 관리 --*/
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
   const [secondSearchFull, setSecondSearchFull] =
     useRecoilState(secondSearchState);
-  const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
-  const [cateBuilding, setCateBuilding] = useRecoilState(cateBuildingState);
-  const [facilities, setFacilities] = useRecoilState(AllFacilityState);
 
-  const dataFetch = async () => {
-    await axios
-      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/facility_list`)
-      .then(function (res) {
-        const { data } = res;
-        const facility_info = JSON.parse(data.facility);
-        setFacilities(facility_info);
-      })
-      .catch((err) => {
-        console.log("에러", err);
-      });
-  };
-  useEffect(() => {
-    dataFetch();
-  }, []);
+  /*-- 데이터 관리 --*/
+  const [buildingList, setBuildingList] = useRecoilState(allBuildingState); //모든 건물
+  const [cateBuilding, setCateBuilding] = useRecoilState(cateBuildingState); //카테고리에 선택된 건물
+  //확인용 console.log("building", buildingList);
 
+  /*-- 구글맵 띄우기 --*/
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
       disableDefaultUI: true,
@@ -118,9 +106,6 @@ const Home: NextPage = () => {
     setModalPk(e.pk);
     setModalFirst(true);
   };
-
-  console.log("facility", facilities);
-  console.log("building", buildingList);
 
   return (
     <div>
