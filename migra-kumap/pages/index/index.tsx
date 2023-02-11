@@ -1,5 +1,4 @@
 import Category from "@/components/Category";
-import { facilities, buildings, Building, Facility } from "@/src/data";
 
 import {
   useLoadScript,
@@ -13,12 +12,12 @@ import type { NextPage } from "next";
 import { useMemo, useState, useEffect } from "react";
 import {
   All,
-  AllBuilding,
   IsChoiceLoaded,
   fromModalPkState,
   indexMapState,
   mapState,
   secondSearchState,
+  cateBuildingState,
 } from "../constants/atom";
 import { MarkerContainer } from "@/styles/entrance/style";
 
@@ -76,6 +75,7 @@ const Home: NextPage = () => {
   const [secondSearchFull, setSecondSearchFull] =
     useRecoilState(secondSearchState);
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
+  const [cateBuilding, setCateBuilding] = useRecoilState(cateBuildingState);
   const [facilities, setFacilities] = useRecoilState(AllFacilityState);
 
   const dataFetch = async () => {
@@ -155,7 +155,7 @@ const Home: NextPage = () => {
             />
           </MarkerContainer>
         ))} */}
-        {buildingList?.map((choiceMarker) => (
+        {cateBuilding?.map((choiceMarker) => (
           <MarkerContainer key={choiceMarker["pk"]}>
             {!isChosen && (
               <MarkerF

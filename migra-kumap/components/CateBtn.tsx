@@ -1,7 +1,7 @@
 import {
-  AllBuilding,
   allBuildingState,
   AllFacilityState,
+  cateBuildingState,
   IsChoiceLoaded,
 } from "@/pages/constants/atom";
 import { Building, Facility, buildings, facilities } from "@/src/data";
@@ -30,6 +30,7 @@ export default function CateBtn({
   iconpath,
 }: propsType) {
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
+  const [cateBuilding, setCateBuilding] = useRecoilState(cateBuildingState);
   const [facilities, setFacilities] = useRecoilState(AllFacilityState);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
 
@@ -68,19 +69,28 @@ export default function CateBtn({
     );
     console.log(temp, "활성화된 카테고리의 시설 객체를 담은 배열");
     // 그 시설들이 소속되어 있는 ""건물"" 객체 배열
-    const selected_buildings: any = [];
 
+    let facility_in: Array<number> = [];
     for (let i in temp) {
+      facility_in.push(temp[i]["fields"]["building_id"]);
+    }
+
+    facility_in = Array.from(new Set(facility_in));
+    console.log(facility_in, "잘 필터링됐나");
+
+    let selected_buildings: any = [];
+
+    for (let i in facility_in) {
       buildingList.map((item: any) => {
-        if (item["pk"] === temp[i]["fields"]["building_id"]) {
-          selected_buildings.push(item);
+        if (item["pk"] === facility_in[i]) {
+          selected_buildings = selected_buildings.concat(item);
         }
       });
     }
 
     console.log(selected_buildings, choice, "그 시설들이 위치한 건물");
     // setBuildingData(selected_buildings);
-    setBuildingList(selected_buildings);
+    setCateBuilding(selected_buildings);
   };
 
   return (

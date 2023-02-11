@@ -1,4 +1,4 @@
-//임시 테스트용
+/* 문지후 카테고리 마커 임시 테스트용 */
 
 import { NamedTupleMember } from "typescript";
 
