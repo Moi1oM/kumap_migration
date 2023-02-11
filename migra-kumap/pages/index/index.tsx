@@ -141,40 +141,41 @@ const Home: NextPage = () => {
         <SearchBox></SearchBox>
         <Category />
 
-        {/* {buildingList?.map((sampleMarker) => (
-          <MarkerContainer key={sampleMarker["pk"]}>
-            <MarkerF
-              position={{
-                lat: sampleMarker["fields"]["building_lat"],
-                lng: sampleMarker["fields"]["building_lon"],
-              }}
-              onLoad={() => console.log("Marker Loaded", sampleMarker)}
-              onClick={() => {
-                markerClicked(sampleMarker);
-              }}
-            />
-          </MarkerContainer>
-        ))} */}
-        {cateBuilding?.map((choiceMarker) => (
-          <MarkerContainer key={choiceMarker["pk"]}>
-            {!isChosen && (
-              <MarkerF
-                icon={iconPath}
-                // icon = {"/category/" + activeCate + ".png"}
-                // icon={"/category/cafe.png"}
-                position={{
-                  lat: choiceMarker["fields"]["building_lat"],
-                  lng: choiceMarker["fields"]["building_lon"],
-                }}
-                onLoad={() => console.log("Marker Loaded", choiceMarker)}
-                onClick={() => {
-                  markerClicked(choiceMarker);
-                }}
-              />
-            )}
-          </MarkerContainer>
-        ))}
+        {cateBuilding.length !== 0
+          ? cateBuilding.map((choiceMarker) => (
+              <MarkerContainer key={choiceMarker["pk"]}>
+                {!isChosen && (
+                  <MarkerF
+                    icon={iconPath}
+                    position={{
+                      lat: choiceMarker["fields"]["building_lat"],
+                      lng: choiceMarker["fields"]["building_lon"],
+                    }}
+                    onLoad={() => console.log("Marker Loaded", choiceMarker)}
+                    onClick={() => {
+                      markerClicked(choiceMarker);
+                    }}
+                  />
+                )}
+              </MarkerContainer>
+            ))
+          : buildingList.map((basicMarker) => (
+              <MarkerContainer key={basicMarker["pk"]}>
+                <MarkerF
+                  icon={"/category/basic.png"}
+                  position={{
+                    lat: basicMarker["fields"]["building_lat"],
+                    lng: basicMarker["fields"]["building_lon"],
+                  }}
+                  onLoad={() => console.log("Marker Loaded", basicMarker)}
+                  onClick={() => {
+                    markerClicked(basicMarker);
+                  }}
+                />
+              </MarkerContainer>
+            ))}
       </GoogleMap>
+
       {modalFirst && <FirstModal></FirstModal>}
       {modalSecond && <SecondModal></SecondModal>}
       {modalThird && <ThirdModal></ThirdModal>}
