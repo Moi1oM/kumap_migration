@@ -126,9 +126,11 @@ export const mySelect = styled.select`
   padding: 4px;
   font-size: 14px;
   border-radius: 6px;
+  opacity: 0;
   &.activeSelect {
     display: block;
     transition-delay: 0.45s;
+    opacity: 1;
   }
 `;
 

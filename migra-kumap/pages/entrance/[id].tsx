@@ -10,6 +10,13 @@ import {
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
+import {
+  entranceModalState,
+  entranceNameState,
+  entranceTimeState,
+} from "../constants/entranceAtom";
+import { useRecoilState } from "recoil";
+import EntranceModal from "../components/entrance/EntranceModal";
 
 const Post = () => {
   const [name, setName] = useState();
@@ -20,6 +27,11 @@ const Post = () => {
   const [schoolj, setSchoolj] = useState();
   const [mapCenter, setMapCenter] = useState();
   const [isMarkerLoaded, setIsMarkerLoaded] = useState(0);
+  const [entranceName, setEntranceName] = useRecoilState(entranceNameState);
+  const [entranceTime, setEntranceTime] = useRecoilState(entranceTimeState);
+
+  const [entranceModal, setEntranceModal] = useRecoilState(entranceModalState);
+
   const router = useRouter();
   const { id } = router.query;
   const dataFetch = async () => {
@@ -27,6 +39,7 @@ const Post = () => {
       .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/entrance/${pk}`)
       .then(function (res) {
         // console.log(res);
+        console.log("entrances data", JSON.parse(res.data.entrances));
         setName(res.data.buildingName);
         setLat(res.data.building_lat);
         setLon(res.data.building_lon);
@@ -59,8 +72,11 @@ const Post = () => {
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
-  const markerClicked = (e: any) => {
-    console.log(e);
+  const markerClicked = (ent: any) => {
+    console.log(ent);
+    setEntranceName(ent.fields.entrance_name);
+    setEntranceTime(ent.fields.entrance_time);
+    setEntranceModal(true);
   };
   // console.log(name);
   // console.log(entrances);
@@ -87,13 +103,14 @@ const Post = () => {
               }}
               onLoad={() => console.log("Marker Loaded")}
               onClick={(e) => {
-                markerClicked(e);
+                markerClicked(entrance);
               }}
             />
           </MarkerContainer>
         ))}
       </GoogleMap>
       <BackMarker src="/modal/arrow_left.png" onClick={arrowLeft} />
+      {entranceModal && <EntranceModal></EntranceModal>}
     </div>
   );
 };
