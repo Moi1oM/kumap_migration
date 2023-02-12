@@ -84,3 +84,23 @@ export const indexMapState = atom({
   key: "indexMap",
   default: null,
 });
+
+export const myModalState = atom({
+  key: "myModal",
+  default: false,
+});
+
+export const walkTimeModalState = atom({
+  key: "walkTimeModal",
+  default: false,
+});
+
+export const walkToBuildPkState = atom({
+  key: "walkToBulidPk",
+  default: null,
+});
+
+export const walkToSearchFullState = atom({
+  key: "walkToSearchFull",
+  default: false,
+});

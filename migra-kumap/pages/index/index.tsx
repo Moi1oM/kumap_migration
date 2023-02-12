@@ -39,7 +39,11 @@ import {
   searchFullState,
   allBuildingState,
   AllFacilityState,
+  walkTimeModalState,
+  walkToSearchFullState,
 } from "../constants/atom";
+import WalkTimeModal from "../components/WalkTimeModal";
+import ToSearchFull from "../components/ToSearchFull";
 
 const Home: NextPage = () => {
   const [map, setMap] = useState<any>(
@@ -70,6 +74,8 @@ const Home: NextPage = () => {
   const [modalLon, setModalLon] = useRecoilState(modalLonState);
   const [modalPk, setModalPk] = useRecoilState(modalPkState);
   const [fromModalPk, setFromModalPk] = useRecoilState(fromModalPkState);
+  const [walkTimeModal, setWalkTimeModal] = useRecoilState(walkTimeModalState);
+  const [toSearchFull, setToSearchFull] = useRecoilState(walkToSearchFullState);
 
   /*-- 검색 관리 --*/
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
@@ -99,6 +105,7 @@ const Home: NextPage = () => {
     return <p>Loading...</p>;
   }
   const markerClicked = (e: any) => {
+    map.zoom = 18;
     setModalSecond(false);
     setModalThird(false);
     map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
@@ -123,6 +130,7 @@ const Home: NextPage = () => {
       >
         {searchFull && <SearchFull indexMap={map}></SearchFull>}
         {secondSearchFull && <SecondSearchFull></SecondSearchFull>}
+        {toSearchFull && <ToSearchFull></ToSearchFull>}
         <SearchBox></SearchBox>
         <Category />
 
@@ -164,6 +172,7 @@ const Home: NextPage = () => {
       {modalFirst && <FirstModal></FirstModal>}
       {modalSecond && <SecondModal></SecondModal>}
       {modalThird && <ThirdModal></ThirdModal>}
+      {walkTimeModal && <WalkTimeModal></WalkTimeModal>}
     </div>
   );
 };

@@ -65,10 +65,11 @@ export default function FirstModal() {
       <S.ModalContainer>
         <S.ModalCloseBtn src="/modal/close_button.png" onClick={onClickClose} />
         <S.ModalH3>{name}</S.ModalH3>
-        <S.ModalAddress></S.ModalAddress>
-        <S.MainBtn onClick={toSecondModal}>목적지 설정</S.MainBtn>
-        <S.ElseBtn onClick={onEntrance}>건물 출입구 확인하기</S.ElseBtn>
-        <S.ElseBtn onClick={onFacility}>건물 내 시설 확인하기</S.ElseBtn>
+        {/* <S.MainBtn onClick={toSecondModal}>목적지 설정</S.MainBtn> */}
+        <S.rowFlext>
+          <S.ElseBtn onClick={onEntrance}>출입구 확인</S.ElseBtn>
+          <S.ElseBtn onClick={onFacility}>부대시설</S.ElseBtn>
+        </S.rowFlext>
       </S.ModalContainer>
     </>
   );

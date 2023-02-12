@@ -23,7 +23,7 @@ export const ModalCloseBtn = styled.img`
   overflow: clip;
   width: 24px;
   height: 24px;
-  padding-left: 80%;
+  padding-right: 80%;
   cursor: pointer;
 `;
 
@@ -59,13 +59,21 @@ export const ElseBtn = styled.p`
   margin: 4px 0px 4px 0px;
   padding: 8px 0px 8px 0px;
   background-color: rgb(233, 231, 231);
-  color: black;
-  width: 75%;
-  height: 12%;
+  color: #8b0029;
+  width: 40%;
+  height: 15vh;
   box-shadow: 0px 2px 4px rgb(0 0 0 / 25%);
   line-height: 30px;
   border-radius: 10px;
   text-decoration: none;
   font-size: large;
   font-weight: 400;
+`;
+
+export const rowFlext = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
 `;

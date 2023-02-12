@@ -8,6 +8,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from "recoil";
+import { SessionProvider } from "next-auth/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -24,9 +25,11 @@ export default function App({ Component, pageProps }: AppProps) {
           src={`https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${process.env.NEXT_PUBLIC_SK_APIKEY}`}
         ></script> */}
       </Head>
-      <GlobalStyle>
-        <Component {...pageProps} />
-      </GlobalStyle>
+      <SessionProvider session={pageProps.session}>
+        <GlobalStyle>
+          <Component {...pageProps} />
+        </GlobalStyle>
+      </SessionProvider>
     </RecoilRoot>
   );
 }

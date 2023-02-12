@@ -4,15 +4,19 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import {
   allBuildingState,
+  fromModalPkState,
   mapState,
   modalPkState,
   modalSecondState,
   modalState,
   modalThirdState,
   searchFullState,
+  secondSearchState,
+  walkToBuildPkState,
+  walkToSearchFullState,
 } from "../constants/atom";
 
-export default function SearchFull({ indexMap }: { indexMap: any }) {
+export default function ToSearchFull() {
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
   const [fullBuildingList, setFullBuildingList] = useState<any[]>([]);
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
@@ -20,15 +24,16 @@ export default function SearchFull({ indexMap }: { indexMap: any }) {
   const [modalFirst, setModalFirst] = useRecoilState(modalState);
   const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
   const [modalThird, setModalThird] = useRecoilState(modalThirdState);
-  const [map, setMap] = useState<any>("");
-  const [modalPk, setModalPk] = useRecoilState(modalPkState);
+  const [modalPk, setModalPk] = useRecoilState(walkToBuildPkState);
+  const [toSearchFull, setToSearchFull] = useRecoilState(walkToSearchFullState);
+  const [fromModalPk, setFromModalPk] = useRecoilState(fromModalPkState);
 
   const dataFetch = async () => {
     await axios
       .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/building_list`)
       .then(function (res) {
         const { data } = res;
-        //console.log("searchfull", data);
+        // console.log("searchfull", data);
         const buliding_info = JSON.parse(data.building);
         // console.log("buliding_info", buliding_info);
         setBuildingList(buliding_info);
@@ -38,11 +43,8 @@ export default function SearchFull({ indexMap }: { indexMap: any }) {
         console.log("에러", err);
       });
   };
-  useEffect(() => {
-    dataFetch();
-  }, []);
   const closeSearchFull = () => {
-    setSearchFull(false);
+    setToSearchFull(false);
   };
   useEffect(() => {
     let newBulidings: any[] = [];
@@ -60,14 +62,10 @@ export default function SearchFull({ indexMap }: { indexMap: any }) {
   };
 
   const moveToFirstModal = (b: any) => {
-    // console.log("hihi", b);
-    setModalSecond(false);
-    setModalThird(false);
-    indexMap.zoom = 18;
-    indexMap.panTo({ lat: b.fields.building_lat, lng: b.fields.building_lon });
+    // console.log("b", b);
+    setToSearchFull(false);
     setModalPk(b.pk);
-    setModalFirst(true);
-    setSearchFull(false);
+    //    map.panTo({ lat: b.fields.building_lat, lng: b.fields.building_lon });
   };
 
   return (

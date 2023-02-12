@@ -21,7 +21,7 @@
     "dotenv-webpack": "^8.0.1",
     "google-map-react": "^2.2.0",
     "next": "13.1.5",
-    "next-auth": "^4.18.10",
+    "next-auth": "^4.19.2",
     "react": "18.2.0",
     "react-awesome-reveal": "^4.2.3",
     "react-dom": "18.2.0",

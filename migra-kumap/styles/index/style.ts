@@ -41,7 +41,7 @@ export const CategoryBox = styled.div`
   display: inline-block;
   white-space: nowrap;
   overflow: auto;
-  z-index: 10;
+  /* z-index: 10; */
 
   width: 86%;
   height: 40px;
