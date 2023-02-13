@@ -56,13 +56,24 @@ export const searchFont2 = styled.span`
   color: #868686;
 `;
 
+export const myContainer = styled.div`
+  position: relative;
+  z-index: 15; // 카테고리랑 검색창 위에
+
+  width: 15%;
+  height: 50px;
+`;
+
 export const myButton = styled.div`
-  margin-left: 3%;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+
   background-color: #be4238;
   border-radius: 100%;
   width: 48px;
   height: 48px;
-  z-index: 20;
+
   color: white;
   line-height: 50px;
   letter-spacing: 0.5px;
@@ -70,30 +81,37 @@ export const myButton = styled.div`
   font-size: 15px;
   text-align: center;
   cursor: pointer;
+
   transition: 0.5s ease-in-out;
   &.active {
+    right: 0%;
+    top: 0%;
+
+    z-index: 20;
     background-color: #ffffff;
     color: #be4238;
   }
 `;
 
 export const myButtonModal = styled.div`
+  position: absolute;
   width: 0;
   height: 0;
-  position: fixed;
-  right: 10%;
-  top: 5%;
+  top: -15%;
+  right: -10%;
+
   transition: 0.5s ease-in-out;
+
   display: flex;
   &.activeModal {
+    position: absolute;
+    top: -15%;
+    right: -10%;
+
     background-color: #be4238;
     width: 240px;
     height: 210px;
-    border-radius: 10%;
-    position: fixed;
-    right: -5%;
-    margin-right: 5%;
-    z-index: 10;
+    border-radius: 12%;
   }
 `;
 
@@ -102,7 +120,7 @@ export const columnFlex = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
-  padding-left: 10px;
+  padding-left: 10%;
 `;
 
 export const modalP = styled.p`

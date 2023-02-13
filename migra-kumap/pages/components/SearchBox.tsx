@@ -45,55 +45,57 @@ export default function SearchBox() {
             <S.searchFont2>{name}</S.searchFont2>
           )}
         </S.first_search_modal>
-        <S.myButton
-          className={isActive ? "active" : undefined}
-          onClick={toggleActive}
-        >
-          MY
-        </S.myButton>
-        <S.myButtonModal className={isActive ? "activeModal" : undefined}>
-          <S.columnFlex>
-            <S.mySelect className={isActive ? "activeSelect" : undefined}>
-              <S.myOption value="korean">한국어</S.myOption>
-              <S.myOption value="english">영어</S.myOption>
-            </S.mySelect>
-            <S.modalP
-              className={isActive ? "active" : undefined}
-              onClick={showWalkTimeModal}
-            >
-              도보 시간 확인하기
-            </S.modalP>
-            {session ? (
-              <>
-                <S.modalP className={isActive ? "active" : undefined}>
-                  시간표 짜러가기
-                </S.modalP>
-                <S.modalP
-                  className={isActive ? "active" : undefined}
-                  onClick={() => {
-                    signOut();
-                  }}
-                >
-                  로그아웃
-                </S.modalP>
-              </>
-            ) : (
-              <>
-                <S.modalP
-                  className={isActive ? "active" : undefined}
-                  onClick={() => {
-                    signIn("kakao");
-                  }}
-                >
-                  카카오 로그인
-                </S.modalP>
-                <S.modalP className={isActive ? "active" : undefined}>
-                  회원가입
-                </S.modalP>
-              </>
-            )}
-          </S.columnFlex>
-        </S.myButtonModal>
+        <S.myContainer>
+          <S.myButtonModal className={isActive ? "activeModal" : undefined}>
+            <S.columnFlex>
+              <S.mySelect className={isActive ? "activeSelect" : undefined}>
+                <S.myOption value="korean">한국어</S.myOption>
+                <S.myOption value="english">영어</S.myOption>
+              </S.mySelect>
+              <S.modalP
+                className={isActive ? "active" : undefined}
+                onClick={showWalkTimeModal}
+              >
+                도보이동시간 확인하기
+              </S.modalP>
+              {session ? (
+                <>
+                  <S.modalP className={isActive ? "active" : undefined}>
+                    시간표 짜러가기
+                  </S.modalP>
+                  <S.modalP
+                    className={isActive ? "active" : undefined}
+                    onClick={() => {
+                      signOut();
+                    }}
+                  >
+                    로그아웃
+                  </S.modalP>
+                </>
+              ) : (
+                <>
+                  <S.modalP
+                    className={isActive ? "active" : undefined}
+                    onClick={() => {
+                      signIn("kakao");
+                    }}
+                  >
+                    카카오 로그인
+                  </S.modalP>
+                  <S.modalP className={isActive ? "active" : undefined}>
+                    회원가입
+                  </S.modalP>
+                </>
+              )}
+            </S.columnFlex>
+          </S.myButtonModal>
+          <S.myButton
+            className={isActive ? "active" : undefined}
+            onClick={toggleActive}
+          >
+            MY
+          </S.myButton>
+        </S.myContainer>
       </S.top_modal_container>
     </>
   );
