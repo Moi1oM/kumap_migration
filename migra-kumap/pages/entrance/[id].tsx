@@ -19,6 +19,10 @@ import { useRecoilState } from "recoil";
 import EntranceModal from "../components/entrance/EntranceModal";
 
 const Post = () => {
+  const [map, setMap] = useState<any>(
+    /** @type google.mpas.GoogleMap */ //indexMapState
+    null
+  );
   const [name, setName] = useState();
   const [pk, setPk] = useState<any>();
   const [lat, setLat] = useState();
@@ -27,8 +31,13 @@ const Post = () => {
   const [schoolj, setSchoolj] = useState();
   const [mapCenter, setMapCenter] = useState();
   const [isMarkerLoaded, setIsMarkerLoaded] = useState(0);
+  const [todayHour, setTodayHour] = useState(0);
+  const [todayMin, setTodayMin] = useState(0);
   const [entranceName, setEntranceName] = useRecoilState(entranceNameState);
   const [entranceTime, setEntranceTime] = useRecoilState(entranceTimeState);
+
+  const [mapLat, setMapLat] = useState("");
+  const [mapLon, setMapLon] = useState("");
 
   const [entranceModal, setEntranceModal] = useRecoilState(entranceModalState);
 
@@ -39,7 +48,14 @@ const Post = () => {
       .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/entrance/${pk}`)
       .then(function (res) {
         // console.log(res);
-        console.log("entrances data", JSON.parse(res.data.entrances));
+        const entrancesData = JSON.parse(res.data.entrances);
+        console.log("entrances data", entrancesData);
+        entrancesData.map((entrance: any) => {
+          console.log(
+            `entrance/${entrance.fields.entrance_name.substr(0, 1)}.png`,
+            entrance.pk
+          );
+        });
         setName(res.data.buildingName);
         setLat(res.data.building_lat);
         setLon(res.data.building_lon);
@@ -56,6 +72,19 @@ const Post = () => {
       dataFetch();
     }
   }, [id, pk]);
+  const todayTime = () => {
+    let now = new Date(); // 현재 날짜 및 시간
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    setTodayHour(hours);
+    setTodayMin(minutes);
+    return hours + "시 " + minutes + "분";
+  };
+  useEffect(() => {
+    const today = todayTime();
+    console.log(today);
+  }, []);
+
   const libraries = useMemo(() => ["places"], []);
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
@@ -74,15 +103,24 @@ const Post = () => {
   }
   const markerClicked = (ent: any) => {
     console.log(ent);
+    setMapLat(ent.fields.entrance_lat);
+    setMapLon(ent.fields.entrance_lon);
     setEntranceName(ent.fields.entrance_name);
     setEntranceTime(ent.fields.entrance_time);
     setEntranceModal(true);
+    map.panTo({ lat: mapLat, lng: mapLon });
   };
   // console.log(name);
   // console.log(entrances);
   const arrowLeft = () => {
+    setEntranceModal(false);
     router.push("/index");
   };
+
+  // useEffect(() => {
+  //   map.panTo({ lat: mapLat, lng: mapLon });
+  // }, [mapLat, mapLon]);
+
   return (
     <div>
       <GoogleMap
@@ -92,11 +130,18 @@ const Post = () => {
         center={{ lat: lat!, lng: lon! }}
         mapTypeId={google.maps.MapTypeId.ROADMAP}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
-        onLoad={() => console.log("Map Component Loaded...")}
+        onLoad={(indexMap) => {
+          console.log("googleMap", indexMap);
+          setMap(indexMap);
+        }}
       >
         {entrances?.map((entrance) => (
           <MarkerContainer key={entrance.pk}>
             <Marker
+              icon={`/entrance/${entrance.fields.entrance_name.substr(
+                0,
+                1
+              )}.png`}
               position={{
                 lat: entrance.fields.entrance_lat,
                 lng: entrance.fields.entrance_lon,

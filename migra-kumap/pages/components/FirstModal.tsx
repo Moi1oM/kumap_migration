@@ -76,8 +76,14 @@ export default function FirstModal() {
         <S.ModalH3>{name}</S.ModalH3>
         {/* <S.MainBtn onClick={toSecondModal}>목적지 설정</S.MainBtn> */}
         <S.rowFlext>
-          <S.ElseBtn onClick={onEntrance}>출입구 확인</S.ElseBtn>
-          <S.ElseBtn onClick={onFacility}>부대시설</S.ElseBtn>
+          <S.ElseBtn onClick={onEntrance}>
+            <S.ElseBtnImg src="/modal/door.png" />
+            <S.ElseBtnText>출입구 확인</S.ElseBtnText>
+          </S.ElseBtn>
+          <S.ElseBtn onClick={onFacility}>
+            <S.ElseBtnImg src="/modal/fac.png" />
+            <S.ElseBtnText>부대시설</S.ElseBtnText>
+          </S.ElseBtn>
         </S.rowFlext>
       </S.ModalContainer>
     </>

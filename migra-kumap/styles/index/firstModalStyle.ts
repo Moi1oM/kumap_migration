@@ -30,7 +30,7 @@ export const ModalCloseBtn = styled.img`
 export const ModalH3 = styled.h3`
   font-size: 160%;
   margin-bottom: 0px;
-  font-weight: 900;
+  font-weight: 600;
   margin-top: 0px;
 `;
 
@@ -54,17 +54,27 @@ export const MainBtn = styled.p`
   font-weight: 600;
 `;
 
-export const ElseBtn = styled.p`
+export const ElseBtn = styled.div`
   cursor: pointer;
   margin: 4px 0px 4px 0px;
   padding: 8px 0px 8px 0px;
   background-color: rgb(233, 231, 231);
-  color: #8b0029;
   width: 40%;
   height: 15vh;
   box-shadow: 0px 2px 4px rgb(0 0 0 / 25%);
-  line-height: 30px;
   border-radius: 10px;
+`;
+
+export const ElseBtnImg = styled.img`
+  margin: 0 auto;
+  width: 45%;
+  height: 60%;
+  padding-top: 5%;
+`;
+
+export const ElseBtnText = styled.p`
+  color: #8b0029;
+  line-height: 30px;
   text-decoration: none;
   font-size: large;
   font-weight: 400;
