@@ -10,7 +10,12 @@ import {
   AllFacilityState,
   cateBuildingState,
   IsChoiceLoaded,
+  modalSecondState,
+  modalState,
+  modalThirdState,
+  walkTimeModalState,
 } from "@/pages/constants/atom";
+import { NoFallbackError } from "next/dist/server/base-server";
 
 interface propsType {
   name: string;
@@ -32,6 +37,12 @@ export default function CateBtn({
 
   const [facilities, setFacilities] = useRecoilState(AllFacilityState);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
+
+  /*-- 모달 관리 --*/
+  const [modalFirst, setModalFirst] = useRecoilState(modalState);
+  const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
+  const [modalThird, setModalThird] = useRecoilState(modalThirdState);
+  const [walkTimeModal, setWalkTimeModal] = useRecoilState(walkTimeModalState);
 
   /*-- 데이터 받아오기 --*/
   const api_urls = [
@@ -67,17 +78,33 @@ export default function CateBtn({
     const temp = facilityList.filter(
       (item: any) => item.fields.category === choice
     );
-    //console.log('활성화된 카테고리의 시설들', temp);
+    console.log("활성화된 카테고리의 시설들", temp);
 
     //해당 시설들이 있는 건물pk 배열
     let facility_in: Array<number> = [];
+    //시설들이 있는 층수 배열
+    let facility_loc: Array<number> = [];
     //해당 건물 담는 배열
     let selected_buildings: any = [];
 
     for (let i in temp) {
       facility_in.push(temp[i]["fields"]["building_id"]);
+      let floor = temp[i]["fields"]["facility_loc"];
+
+      if (floor.includes("층")) {
+        let hint = floor.indexOf("층");
+        if (floor.includes("지하")) {
+          //지하N층이면
+          facility_loc.push(-1 * Number(floor[hint - 1]));
+        } else {
+          facility_loc.push(Number(floor[hint - 1]));
+        }
+      } else {
+        facility_loc.push(0); //예외처리
+      }
     }
 
+    console.log(facility_loc);
     facility_in = Array.from(new Set(facility_in));
     //console.log("중복 없이 필터링 확인", facility_in);
 
@@ -101,6 +128,11 @@ export default function CateBtn({
         handleCate(category);
         filterCate(facilities, category);
         setisChosen(true);
+
+        setModalFirst(false);
+        setModalSecond(false);
+        setModalThird(false);
+        setWalkTimeModal(false);
       }}
     >
       <S.CategoryImg src={iconpath} />

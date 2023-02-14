@@ -5,6 +5,7 @@ import SearchBox from "@/pages/components/SearchBox";
 import SearchFull from "../components/SearchFull";
 import SecondSearchFull from "../components/SecondSearchFull";
 import Category from "@/pages/components/Category";
+import DetailMarker from "../components/DetailMarker";
 
 import { choice } from "@/styles/index/SearchFull";
 import { MarkerContainer } from "@/styles/entrance/style";
@@ -105,6 +106,7 @@ const Home: NextPage = () => {
     return <p>Loading...</p>;
   }
   const markerClicked = (e: any) => {
+    console.log("초이스마커확인", e);
     map.zoom = 18;
     setModalSecond(false);
     setModalThird(false);
