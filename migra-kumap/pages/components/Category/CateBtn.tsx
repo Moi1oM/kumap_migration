@@ -10,6 +10,7 @@ import {
   AllFacilityState,
   cateBuildingState,
   IsChoiceLoaded,
+  isFMarkerClicked,
   modalSecondState,
   modalState,
   modalThirdState,
@@ -43,6 +44,8 @@ export default function CateBtn({
   const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
   const [modalThird, setModalThird] = useRecoilState(modalThirdState);
   const [walkTimeModal, setWalkTimeModal] = useRecoilState(walkTimeModalState);
+  const [isFMarkerClicekd, setFMarkerClicekd] =
+    useRecoilState(isFMarkerClicked);
 
   /*-- 데이터 받아오기 --*/
   const api_urls = [
@@ -133,6 +136,8 @@ export default function CateBtn({
         setModalSecond(false);
         setModalThird(false);
         setWalkTimeModal(false);
+
+        setFMarkerClicekd(false);
       }}
     >
       <S.CategoryImg src={iconpath} />

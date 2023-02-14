@@ -53,9 +53,50 @@ export const CategoryBox = styled.div`
   }
 `;
 
-export const facilityFloor = styled.div`
-  width: 40px;
-  height: 20px;
-  background-color: red;
+export const FloorMarkerBox = styled.div`
+  position: relative;
+  bottom: 30px;
+  right: 20px;
+
+  height: 30px;
+  border-radius: 40px;
+  background-color: #be4238;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+export const FloorMarkerIcon = styled.div`
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border-radius: 100%;
+  margin-top: 4px;
+  margin-left: 5px;
+  margin-right: 3px;
+`;
+
+export const FloorMarkerImg = styled.img`
+  width: 12px;
+  height: 12px;
+  margin: 5px 5px;
+`;
+
+export const FloorMarkerFont1 = styled.span`
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 30px;
   color: white;
+  margin-left: 3px;
+  margin-right: 3px;
+`;
+
+export const FloorMarkerFont2 = styled.span`
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 30px;
+  color: white;
+  margin-left: 3px;
+  margin-right: 9px;
 `;

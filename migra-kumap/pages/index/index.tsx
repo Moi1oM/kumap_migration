@@ -42,6 +42,7 @@ import {
   walkTimeModalState,
   walkToSearchFullState,
   clickedBuildingState,
+  isFMarkerClicked,
 } from "../constants/atom";
 import WalkTimeModal from "../components/WalkTimeModal";
 import ToSearchFull from "../components/ToSearchFull";
@@ -80,6 +81,8 @@ const Home: NextPage = () => {
   const [toSearchFull, setToSearchFull] = useRecoilState(walkToSearchFullState);
   const [clicekdBuilding, setclickedBuilding] =
     useRecoilState(clickedBuildingState);
+  const [isFMarkerClicekd, setFMarkerClicekd] =
+    useRecoilState(isFMarkerClicked);
 
   /*-- 검색 관리 --*/
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
@@ -117,6 +120,7 @@ const Home: NextPage = () => {
     setModalPk(e.pk);
     setModalFirst(true);
     setclickedBuilding(e);
+    setFMarkerClicekd(true);
   };
 
   return (
