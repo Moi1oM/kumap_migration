@@ -2,7 +2,7 @@ import CateBtn from "./CateBtn";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { All } from "@/pages/constants/atom";
-import * as S from "../../styles/index/style";
+import * as S from "../../../styles/index/style";
 
 export default function Category() {
   const [activeCate, setActiveCate] = useRecoilState<string>(All);

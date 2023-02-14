@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 
 import styled from "styled-components";
-import * as S from "../../styles/index/style";
+import * as S from "../../../styles/index/style";
 
 import {
   allBuildingState,

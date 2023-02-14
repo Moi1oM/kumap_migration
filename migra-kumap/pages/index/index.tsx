@@ -4,7 +4,7 @@ import ThirdModal from "../components/ThirdModal";
 import SearchBox from "@/pages/components/SearchBox";
 import SearchFull from "../components/SearchFull";
 import SecondSearchFull from "../components/SecondSearchFull";
-import Category from "@/pages/components/Category";
+import Category from "@/pages/components/Category/Category";
 import DetailMarker from "../components/DetailMarker";
 
 import { choice } from "@/styles/index/SearchFull";
@@ -42,6 +42,7 @@ import {
   AllFacilityState,
   walkTimeModalState,
   walkToSearchFullState,
+  clickedBuildingState,
 } from "../constants/atom";
 import WalkTimeModal from "../components/WalkTimeModal";
 import ToSearchFull from "../components/ToSearchFull";
@@ -77,6 +78,8 @@ const Home: NextPage = () => {
   const [fromModalPk, setFromModalPk] = useRecoilState(fromModalPkState);
   const [walkTimeModal, setWalkTimeModal] = useRecoilState(walkTimeModalState);
   const [toSearchFull, setToSearchFull] = useRecoilState(walkToSearchFullState);
+  const [clicekdBuilding, setclickedBuilding] =
+    useRecoilState(clickedBuildingState);
 
   /*-- 검색 관리 --*/
   const [searchFull, setSearchFull] = useRecoilState(searchFullState);
@@ -114,6 +117,7 @@ const Home: NextPage = () => {
     // setModalLon(e.fields.building_lon);
     setModalPk(e.pk);
     setModalFirst(true);
+    setclickedBuilding(e);
   };
 
   return (

@@ -8,12 +8,17 @@ import {
   modalSecondState,
   modalBuildingNameState,
   modalThirdState,
+  clickedBuildingState,
 } from "@/pages/constants/atom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
 export default function FirstModal() {
+  const [clicekdBuilding, setclickedBuilding] =
+    useRecoilState(clickedBuildingState);
+  console.log("확인-----", clicekdBuilding);
+
   const router = useRouter();
   const [modal, setModal] = useRecoilState(modalState);
   const [modalFirst, setModalFirst] = useRecoilState(modalState);

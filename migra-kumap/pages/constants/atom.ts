@@ -104,3 +104,8 @@ export const walkToSearchFullState = atom({
   key: "walkToSearchFull",
   default: false,
 });
+
+export const clickedBuildingState = atom({
+  key: "clickedBuilding",
+  default: null,
+});
