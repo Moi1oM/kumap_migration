@@ -25,9 +25,13 @@ export default function EntranceModal() {
       <S.ModalContainer>
         <S.ModalCloseBtn src="/modal/close_button.png" onClick={onClickClose} />
         <S.ModalH3>{name ? name : "error"}</S.ModalH3>
-        <S.entranceImg src="/modal/exampleEnt.png" />
-        <S.entranceSpan>{entranceName}</S.entranceSpan>
-        <S.entranceSpan>{entranceTime}</S.entranceSpan>
+        <S.modalRow>
+          <S.entranceImg src="/modal/exampleEnt.png" />
+          <S.modalCol>
+            <S.entranceSpan>{entranceName}</S.entranceSpan>
+            <S.entranceSpan>{entranceTime}</S.entranceSpan>
+          </S.modalCol>
+        </S.modalRow>
       </S.ModalContainer>
     </>
   );

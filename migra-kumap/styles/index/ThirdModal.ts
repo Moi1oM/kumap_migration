@@ -30,7 +30,7 @@ export const ModalCloseBtn = styled.img`
 export const ModalH3 = styled.h3`
   font-size: 120%;
   margin-bottom: 0px;
-  font-weight: 900;
+  font-weight: 600;
   margin-top: 0px;
 `;
 

@@ -24,7 +24,7 @@ const Container = styled.div`
   margin: 0 auto;
   font-size: 1.6rem;
   background-color: #fff;
-  /* font-family: "Noto Sans KR"; */
+  font-family: "Noto Sans KR", sans-serif;
   color: #222222;
 `;
 

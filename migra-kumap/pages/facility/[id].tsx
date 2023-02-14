@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import * as S from "@/styles/facility/style";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import FacilityGroup from "../components/facility/FacilityGroup";
 
 const Post = () => {
   const router = useRouter();
@@ -9,6 +10,8 @@ const Post = () => {
   const [name, setName] = useState();
   const [history, setHistory] = useState();
   const [facilities, setFacilities] = useState<any[]>([]);
+  const [facList, setFacList] = useState<any[][]>([[], [], [], [], [], [], []]);
+  const [buildHistory, setBuildHistory] = useState([]);
   const { id } = router.query;
 
   const clickedLeft = () => {
@@ -22,11 +25,43 @@ const Post = () => {
         const { data } = res;
         const building = JSON.parse(data.building);
         const facilitie = JSON.parse(data.facilities);
-        // console.log("buliding", building);
-        // console.log("faciliites", facilitie);
+        console.log("buliding", building);
+        const splitBuildingHistory = building[0].fields.history.split("\r\n");
+        splitBuildingHistory.map((his: any) => his.replace("-", "·"));
+        console.log("split", splitBuildingHistory);
+        setBuildHistory(splitBuildingHistory);
+        console.log("faciliites", facilitie);
         setName(building[0].fields.building_name);
-        setHistory(building[0].fields.history);
         setFacilities(facilitie);
+        let faciList: any[][] = [
+          ["열람실/라운지"],
+          ["카페"],
+          ["식당"],
+          ["원스탑"],
+          ["인쇄"],
+          ["자동책반납기"],
+          ["ATM"],
+        ];
+        for (let i = 0; i < facilitie.length; i++) {
+          const facfac: any = facilitie[i];
+          if (facfac.fields.category === "lounge") {
+            faciList[0].push(facfac);
+          } else if (facfac.fields.category === "cafe") {
+            faciList[1].push(facfac);
+          } else if (facfac.fields.category === "restaurant") {
+            faciList[2].push(facfac);
+          } else if (facfac.fields.category === "one-stop") {
+            faciList[3].push(facfac);
+          } else if (facfac.fields.category === "printer") {
+            faciList[4].push(facfac);
+          } else if (facfac.fields.category === "book_return") {
+            faciList[5].push(facfac);
+          } else {
+            faciList[6].push(facfac);
+          }
+        }
+        console.log("faciList", faciList);
+        setFacList(faciList);
       })
       .catch((err) => {
         console.log("에러", err);
@@ -47,13 +82,18 @@ const Post = () => {
           <S.titleBox>
             <S.titleHeader>
               <S.BackMarker src="/modal/arrow_left.png" onClick={clickedLeft} />
-              <h2>{name}</h2>
+              <S.BuildingName>{name}</S.BuildingName>
               <br />
             </S.titleHeader>
           </S.titleBox>
           <S.contentBox>
-            <S.historyP>{history}</S.historyP>
-            {facilities?.map((fac) => (
+            {buildHistory?.map((hist) => (
+              <S.historyP key={hist}>{hist}</S.historyP>
+            ))}
+            {facList?.map((f) => (
+              <FacilityGroup key={f[0]} category={f[0]} facs={f.slice(1)} />
+            ))}
+            {/* {facilities?.map((fac) => (
               <S.facList key={fac.pk}>
                 <div>
                   <S.facName>{fac.fields.facility_name}</S.facName>
@@ -61,7 +101,7 @@ const Post = () => {
                   <S.facInfo>{fac.fields.facility_loc}</S.facInfo>
                 </div>
               </S.facList>
-            ))}
+            ))} */}
           </S.contentBox>
         </S.wrapper>
       </S.middleDiv>

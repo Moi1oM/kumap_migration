@@ -8,7 +8,6 @@ export const ModalContainer = styled.div`
   align-items: center;
   text-align: center;
   width: 100%;
-  height: 45%;
   max-width: 450px;
   position: fixed;
   bottom: 0;
@@ -31,17 +30,40 @@ export const ModalCloseBtn = styled.img`
 export const ModalH3 = styled.h3`
   font-size: 120%;
   margin-bottom: 0px;
-  font-weight: 900;
+  font-weight: 600;
   margin-top: -7%;
 `;
 
 export const entranceImg = styled.img`
-  margin: 0 auto;
-  width: 60%;
-  height: 50%;
+  width: 40%;
+  height: 40%;
   margin-top: 5%;
+  margin-right: 6%;
+  margin-left: 3%;
+  margin-bottom: 3%;
+  border-radius: 5px;
 `;
 
 export const entranceSpan = styled.span`
+  font-size: 70%;
   padding-top: 5%;
+`;
+
+export const modalRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+`;
+
+export const modalCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  width: 50%;
 `;

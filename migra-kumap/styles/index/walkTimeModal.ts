@@ -44,6 +44,7 @@ export const button_loc = styled.div`
   height: 10%;
   line-height: 30px;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 export const loc_img = styled.img`

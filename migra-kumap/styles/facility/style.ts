@@ -4,6 +4,11 @@ interface ffacList {
   key: number;
 }
 
+export const BuildingName = styled.h2`
+  font-size: 80%;
+  font-weight: 600;
+`;
+
 export const middleDiv = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -51,6 +56,8 @@ export const historyBox = styled.div`
 export const historyP = styled.p`
   margin: 0px;
   white-space: pre-line;
+  font-size: 60%;
+  margin-top: 2%;
 `;
 
 export const facList = styled.div<ffacList>`
