@@ -53,3 +53,10 @@ export const CategoryBox = styled.div`
     display: none;
   }
 `;
+
+export const facilityFloor = styled.div`
+  width: 40px;
+  height: 20px;
+  background-color: red;
+  color: white;
+`;

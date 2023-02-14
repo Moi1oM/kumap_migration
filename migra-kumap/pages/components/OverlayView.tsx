@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
-import { Overlay } from "../api/Overlaysample";
+import { createOverlay } from "../api/Overlaysample";
 
 type OverlayProps = PropsWithChildren<{
   position: google.maps.LatLng | google.maps.LatLngLiteral;
@@ -23,7 +23,7 @@ export default function OverlayView({
   }, []);
 
   const overlay = useMemo(() => {
-    return new Overlay(container, pane, position);
+    return createOverlay(container, pane, position);
   }, [container, pane, position]);
 
   useEffect(() => {

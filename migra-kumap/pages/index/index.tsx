@@ -5,7 +5,6 @@ import SearchBox from "@/pages/components/SearchBox";
 import SearchFull from "../components/SearchFull";
 import SecondSearchFull from "../components/SecondSearchFull";
 import Category from "@/pages/components/Category/Category";
-import DetailMarker from "../components/DetailMarker";
 
 import { choice } from "@/styles/index/SearchFull";
 import { MarkerContainer } from "@/styles/entrance/style";
@@ -46,6 +45,7 @@ import {
 } from "../constants/atom";
 import WalkTimeModal from "../components/WalkTimeModal";
 import ToSearchFull from "../components/ToSearchFull";
+import FloorMarker from "../components/FloorMarker";
 
 const Home: NextPage = () => {
   const [map, setMap] = useState<any>(
@@ -89,7 +89,6 @@ const Home: NextPage = () => {
   /*-- 데이터 관리 --*/
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState); //모든 건물
   const [cateBuilding, setCateBuilding] = useRecoilState(cateBuildingState); //카테고리에 선택된 건물
-  //확인용 console.log("building", buildingList);
 
   /*-- 구글맵 띄우기 --*/
   const mapOptions = useMemo<google.maps.MapOptions>(
@@ -139,6 +138,7 @@ const Home: NextPage = () => {
         {toSearchFull && <ToSearchFull></ToSearchFull>}
         <SearchBox></SearchBox>
         <Category />
+        <FloorMarker map={map} />
 
         {cateBuilding.length !== 0
           ? cateBuilding.map((choiceMarker) => (
