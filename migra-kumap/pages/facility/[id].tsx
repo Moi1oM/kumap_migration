@@ -2,12 +2,10 @@ import { useRouter } from "next/router";
 import * as S from "@/styles/facility/style";
 import axios from "axios";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
+
 import { useRecoilState } from "recoil";
 import { isFMarkerClicked } from "../constants/atom";
-=======
 import FacilityGroup from "../components/facility/FacilityGroup";
->>>>>>> aa65c7c9482fbf4360dd6a149f6f8967d56383ae
 
 const Post = () => {
   const router = useRouter();
@@ -15,13 +13,10 @@ const Post = () => {
   const [name, setName] = useState();
   const [history, setHistory] = useState();
   const [facilities, setFacilities] = useState<any[]>([]);
-<<<<<<< HEAD
   const [isFMarkerClicekd, setFMarkerClicked] =
     useRecoilState(isFMarkerClicked);
-=======
   const [facList, setFacList] = useState<any[][]>([[], [], [], [], [], [], []]);
   const [buildHistory, setBuildHistory] = useState([]);
->>>>>>> aa65c7c9482fbf4360dd6a149f6f8967d56383ae
   const { id } = router.query;
 
   const clickedLeft = () => {
