@@ -7,6 +7,7 @@ export const Container = styled.div`
 
 export const ImageCont = styled.img`
   width: 100%;
+  height: 100vh;
 `;
 
 const ToInvertImg = (isActive: boolean) => {
@@ -18,8 +19,6 @@ const ToInvertImg = (isActive: boolean) => {
 export const CategoryImg = styled.img<{ isActive: boolean }>`
   width: 15%;
   height: 10px;
-
-  /* filter: invert(ToInvertImg(${(props) => props.isActive})); */
 `;
 
 export const CategoryBtn = styled.button<{ isActive: boolean }>`

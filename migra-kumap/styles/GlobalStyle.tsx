@@ -6,6 +6,10 @@ const GlobalStyleWrapper = createGlobalStyle`
     padding:0;
     /* background-color: #1D1D1D; */
   }
+
+  .scroll::-webkit-scrollbar {
+  display: none;
+}
   
   a {
     color: inherit;
