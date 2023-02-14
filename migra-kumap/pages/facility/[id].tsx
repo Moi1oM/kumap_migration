@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import * as S from "@/styles/facility/style";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { isFMarkerClicked } from "../constants/atom";
 
 const Post = () => {
   const router = useRouter();
@@ -9,10 +11,13 @@ const Post = () => {
   const [name, setName] = useState();
   const [history, setHistory] = useState();
   const [facilities, setFacilities] = useState<any[]>([]);
+  const [isFMarkerClicekd, setFMarkerClicked] =
+    useRecoilState(isFMarkerClicked);
   const { id } = router.query;
 
   const clickedLeft = () => {
     router.push("/index");
+    setFMarkerClicked(false);
   };
 
   const dataFetch = async () => {

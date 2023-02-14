@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const All = atom<string>({
   key: "All",
-  default: "basic",
+  default: "",
 });
 
 export const IsChoiceLoaded = atom<boolean>({
@@ -108,4 +108,9 @@ export const walkToSearchFullState = atom({
 export const clickedBuildingState = atom({
   key: "clickedBuilding",
   default: null,
+});
+
+export const isFMarkerClicked = atom({
+  key: "isMarkerClicked",
+  default: false,
 });

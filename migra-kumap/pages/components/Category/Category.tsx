@@ -26,7 +26,7 @@ export default function Category() {
             category="cafe"
             isActive={activeCate === "cafe" ? true : false}
             handleCate={setActiveCate}
-            iconpath="/category/coolicon.png"
+            iconpath="/category/cafeicon.png"
           />
           <CateBtn
             name="스터디"
@@ -47,28 +47,28 @@ export default function Category() {
             category="one-stop"
             isActive={activeCate === "one-stop" ? true : false}
             handleCate={setActiveCate}
-            iconpath="/category/coolicon.png"
+            iconpath="/category/one-stopicon.png"
           />
           <CateBtn
             name="책반납기"
             category="book_return"
             isActive={activeCate === "book_return" ? true : false}
             handleCate={setActiveCate}
-            iconpath="/category/coolicon.png"
+            iconpath="/category/book_returnicon.png"
           />
           <CateBtn
             name="프린터"
             category="printer"
             isActive={activeCate === "printer" ? true : false}
             handleCate={setActiveCate}
-            iconpath="/category/coolicon.png"
+            iconpath="/category/printericon.png"
           />
           <CateBtn
             name="ATM"
             category="ATM"
             isActive={activeCate === "ATM" ? true : false}
             handleCate={setActiveCate}
-            iconpath="/category/coolicon.png"
+            iconpath="/category/ATMicon.png"
           />
         </article>
       </S.CategoryBox>

@@ -9,6 +9,7 @@ import {
   modalBuildingNameState,
   modalThirdState,
   clickedBuildingState,
+  isFMarkerClicked,
 } from "@/pages/constants/atom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -24,11 +25,14 @@ export default function FirstModal() {
   const [modalFirst, setModalFirst] = useRecoilState(modalState);
   const [modalSecond, setModalSecond] = useRecoilState(modalSecondState);
   const [modalThird, setModalThird] = useRecoilState(modalThirdState);
+  const [isFMarkerClicekd, setFMarkerclicked] =
+    useRecoilState(isFMarkerClicked);
 
   const onClickClose = () => {
     setName("");
     setModal(!modal);
     setModalPk(0);
+    setFMarkerclicked(false);
   };
   const [modalPk, setModalPk] = useRecoilState(modalPkState);
   const [name, setName] = useRecoilState(modalBuildingNameState);
