@@ -1,7 +1,19 @@
+import styled from "styled-components";
 import * as S from "../styles/timetable/style";
 import Timeboard from "./components/timetable/Timeboard";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import NewBottomSheet from "./components/timetable/newComponent/NewBottomSheet";
 
 export default function Timetable() {
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpenBottomSheet = () => {
+    setIsBottomSheetOpen(true);
+  };
+  const handleCloseBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
   return (
     <>
       <S.TopBox>
@@ -12,6 +24,7 @@ export default function Timetable() {
         <S.plusButton>+</S.plusButton>
       </S.TopContainer>
       <Timeboard />
+      <NewBottomSheet />
     </>
   );
 }

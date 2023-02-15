@@ -8,8 +8,10 @@ import {
 } from "../constants/atom";
 import { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function SearchBox() {
+  const router = useRouter();
   const { data: session, status } = useSession<any>({ required: false });
   const [walkTimeModal, setWalkTimeModal] = useRecoilState(walkTimeModalState);
   const [name, setName] = useRecoilState(modalBuildingNameState);
@@ -25,6 +27,10 @@ export default function SearchBox() {
   const showWalkTimeModal = () => {
     setIsActive(false);
     setWalkTimeModal(true);
+  };
+
+  const toTimeTable = () => {
+    router.push("/timetable");
   };
 
   return (
@@ -60,7 +66,10 @@ export default function SearchBox() {
               </S.modalP>
               {session ? (
                 <>
-                  <S.modalP className={isActive ? "active" : undefined}>
+                  <S.modalP
+                    className={isActive ? "active" : undefined}
+                    onClick={toTimeTable}
+                  >
                     시간표 짜러가기
                   </S.modalP>
                   <S.modalP
@@ -77,7 +86,7 @@ export default function SearchBox() {
                   <S.modalP
                     className={isActive ? "active" : undefined}
                     onClick={() => {
-                      signIn("kakao");
+                      signIn("kakao", { callbackUrl: "/signup" });
                     }}
                   >
                     카카오 로그인

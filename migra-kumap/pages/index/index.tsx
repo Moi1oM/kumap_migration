@@ -5,7 +5,7 @@ import SearchBox from "@/pages/components/SearchBox";
 import SearchFull from "../components/SearchFull";
 import SecondSearchFull from "../components/SecondSearchFull";
 import Category from "@/pages/components/Category/Category";
-
+import loading from "@/public/lotties/loading.json";
 import { choice } from "@/styles/index/SearchFull";
 import { MarkerContainer } from "@/styles/entrance/style";
 
@@ -47,6 +47,7 @@ import {
 import WalkTimeModal from "../components/WalkTimeModal";
 import ToSearchFull from "../components/ToSearchFull";
 import FloorMarker from "../components/FloorMarker";
+import Lottie from "react-lottie-player";
 
 const Home: NextPage = () => {
   const [map, setMap] = useState<any>(
@@ -108,7 +109,14 @@ const Home: NextPage = () => {
   });
 
   if (!isLoaded) {
-    return <p>Loading...</p>;
+    return (
+      <Lottie
+        loop
+        animationData={loading}
+        play
+        style={{ width: 150, height: 150 }}
+      />
+    );
   }
   const markerClicked = (e: any) => {
     console.log("초이스마커확인", e);
