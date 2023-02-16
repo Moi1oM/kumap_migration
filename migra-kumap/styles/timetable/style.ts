@@ -25,7 +25,8 @@ export const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
-  background-color: yellowgreen;
+  margin-top: 1%;
+  margin-bottom: 1%;
 `;
 
 export const semesterFont = styled.p`
@@ -43,7 +44,7 @@ export const plusButton = styled.div`
 
   font-size: 50px;
   color: white;
-  line-height: 55px;
+  line-height: 48px;
   text-align: center;
 `;
 
@@ -51,5 +52,4 @@ export const TimetableWrapper = styled.div`
   width: 95%;
   height: 400px;
   margin: 0% auto;
-  background-color: blue;
 `;

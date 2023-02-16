@@ -48,7 +48,7 @@ export default function WalkTimeModal() {
   const fromNameDetail = async () => {
     await axios
       .get(
-        `${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${fromModalPk}`
+        `${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/buildings/${fromModalPk}`
       )
       .then(function (res) {
         const { data } = res;
@@ -64,7 +64,7 @@ export default function WalkTimeModal() {
 
   const toNameDetail = async () => {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${modalPk}`)
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/buildings/${modalPk}`)
       .then(function (res) {
         const { data } = res;
         const { name, building_lat, building_lon } = data;

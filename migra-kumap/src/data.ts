@@ -1,7 +1,5 @@
 /* 문지후 카테고리 마커 임시 테스트용 */
 
-import { NamedTupleMember } from "typescript";
-
 export type Building = {
   id: number;
   name: string;
@@ -16,6 +14,66 @@ export type Facility = {
   building: string;
   floor: string;
 };
+
+export const SampleInput = {
+  id: 20,
+  name: "데이터베이스",
+  professor: "정순영",
+  place: "정보통신관",
+  duration: ["0", "2-4", "0", "2-4", "0"],
+};
+
+export const PickedSubjects = [
+  {
+    id: 1,
+    name: "전산수학",
+    professor: "문지후",
+    place: "정보통신관",
+    duration: ["3-4", "0", "0", "0", "0"],
+  },
+  {
+    id: 2,
+    name: "컴퓨터네트워크",
+    professor: "김지욱",
+    place: "애기능생활관",
+    duration: ["0", "2", "0", "2", "0"],
+  },
+  {
+    id: 3,
+    name: "알고리즘",
+    professor: "전성운",
+    place: "경영본관",
+    duration: ["1", "0", "1", "0", "0"],
+  },
+  {
+    id: 4,
+    name: "교양러시아어초급",
+    professor: "윤정윤",
+    place: "운초우선교육관",
+    duration: ["0", "5-6", "0", "0", "6"],
+  },
+  {
+    id: 5,
+    name: "스타트업 Campus CEO",
+    professor: "한예진",
+    place: "경영본관",
+    duration: ["0", "4", "0", "4", "0"],
+  },
+  {
+    id: 6,
+    name: "인터넷 프로토콜",
+    professor: "이민용",
+    place: "신공학관",
+    duration: ["0", "6", "0", "0", "3"],
+  },
+  {
+    id: 7,
+    name: "교육문제세미나",
+    professor: "오의정",
+    place: "운초우선교육관",
+    duration: ["0", "7", "0", "7-8", "0"],
+  },
+];
 
 export const buildings = [
   {

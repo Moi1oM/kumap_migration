@@ -48,7 +48,7 @@ export default function SecondModal() {
   const fromNameDetail = async () => {
     await axios
       .get(
-        `${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${fromModalPk}`
+        `${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/buildings/${fromModalPk}`
       )
       .then(function (res) {
         const { data } = res;

@@ -37,7 +37,9 @@ export default function SearchBox() {
     <>
       <S.top_modal_container>
         <S.first_search_modal
-          onClick={onSearchFull}
+          onClick={() => {
+            setSearchFull(!searchFull);
+          }}
           className={isActive ? "activeSearch" : undefined}
         >
           {name === "" ? (

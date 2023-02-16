@@ -8,7 +8,6 @@ import Category from "@/pages/components/Category/Category";
 import loading from "@/public/lotties/loading.json";
 import { choice } from "@/styles/index/SearchFull";
 import { MarkerContainer } from "@/styles/entrance/style";
-
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import type { NextPage } from "next";
@@ -43,11 +42,15 @@ import {
   walkToSearchFullState,
   clickedBuildingState,
   isFMarkerClicked,
+  IsFloorLoaded,
+  IsOverlayLoaded,
 } from "../constants/atom";
 import WalkTimeModal from "../components/WalkTimeModal";
 import ToSearchFull from "../components/ToSearchFull";
 import FloorMarker from "../components/FloorMarker";
 import Lottie from "react-lottie-player";
+import { relative } from "path";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Home: NextPage = () => {
   const [map, setMap] = useState<any>(
@@ -61,10 +64,15 @@ const Home: NextPage = () => {
   const [activeCate, setActiveCate] = useRecoilState<string>(All);
   const [isChosen, setisChosen] = useRecoilState(IsChoiceLoaded);
   const iconPath = `/category/${activeCate}.png`;
+  const [isFloor, setIsFloor] = useRecoilState(IsFloorLoaded);
+  const [isOverlay, setIsOverlay] = useRecoilState(IsOverlayLoaded);
 
   useEffect(() => {
     {
       iconPath && setisChosen(false);
+    }
+    {
+      isFloor && setIsOverlay(false);
     }
     // console.log(iconPath);
     // console.log(isChosen);
@@ -123,16 +131,18 @@ const Home: NextPage = () => {
     map.zoom = 18;
     setModalSecond(false);
     setModalThird(false);
-    map.panTo({ lat: e.fields.building_lat, lng: e.fields.building_lon });
+    map.panTo({ lat: Number(e.latitude), lng: Number(e.longitude) });
     // setModalLon(e.fields.building_lon);
-    setModalPk(e.pk);
+    setModalPk(e.id);
     setModalFirst(true);
     setclickedBuilding(e);
     setFMarkerClicekd(true);
+    setIsOverlay(true);
   };
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      {!searchFull && <Category />}
       <GoogleMap
         id="65e8ebc6cdf29142"
         options={mapOptions}
@@ -145,38 +155,53 @@ const Home: NextPage = () => {
           setMap(indexMap);
         }}
       >
-        {searchFull && <SearchFull indexMap={map}></SearchFull>}
+        <AnimatePresence>
+          {searchFull && (
+            <motion.div
+              style={{ zIndex: 40 }}
+              initial={{ y: 2000, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 2000, opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <SearchFull indexMap={map}></SearchFull>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {secondSearchFull && <SecondSearchFull></SecondSearchFull>}
         {toSearchFull && <ToSearchFull></ToSearchFull>}
-        <SearchBox></SearchBox>
-        <Category />
-        <FloorMarker map={map} />
+        {!searchFull && <SearchBox></SearchBox>}
+
+        {!isOverlay && <FloorMarker map={map} />}
 
         {cateBuilding.length !== 0
           ? cateBuilding.map((choiceMarker) => (
-              <MarkerContainer key={choiceMarker["pk"]}>
+              <MarkerContainer key={choiceMarker["id"]}>
                 {!isChosen && (
-                  <MarkerF
-                    icon={iconPath}
-                    position={{
-                      lat: choiceMarker["fields"]["building_lat"],
-                      lng: choiceMarker["fields"]["building_lon"],
-                    }}
-                    onLoad={() => console.log("Marker Loaded", choiceMarker)}
-                    onClick={() => {
-                      markerClicked(choiceMarker);
-                    }}
-                  />
+                  <div style={{ animation: "${fadein} 1s 1s forwards" }}>
+                    <MarkerF
+                      icon={iconPath}
+                      position={{
+                        lat: Number(choiceMarker["latitude"]),
+                        lng: Number(choiceMarker["longitude"]),
+                      }}
+                      onLoad={() => console.log("Marker Loaded", choiceMarker)}
+                      onClick={() => {
+                        markerClicked(choiceMarker);
+                      }}
+                    />
+                  </div>
                 )}
               </MarkerContainer>
             ))
           : buildingList.map((basicMarker) => (
-              <MarkerContainer key={basicMarker["pk"]}>
+              <MarkerContainer key={basicMarker["id"]}>
                 <MarkerF
                   icon={"/category/basic.png"}
                   position={{
-                    lat: basicMarker["fields"]["building_lat"],
-                    lng: basicMarker["fields"]["building_lon"],
+                    lat: Number(basicMarker["latitude"]),
+                    lng: Number(basicMarker["longitude"]),
                   }}
                   onLoad={() => console.log("Marker Loaded", basicMarker)}
                   onClick={() => {

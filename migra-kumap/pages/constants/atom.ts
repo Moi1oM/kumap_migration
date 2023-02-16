@@ -1,8 +1,18 @@
 import { atom } from "recoil";
 
+export const IsFloorLoaded = atom<string>({
+  key: "isFloorLoaded",
+  default: "",
+});
+
 export const All = atom<string>({
   key: "All",
   default: "",
+});
+
+export const IsOverlayLoaded = atom<boolean>({
+  key: "isOverlayLoaded",
+  default: false,
 });
 
 export const IsChoiceLoaded = atom<boolean>({

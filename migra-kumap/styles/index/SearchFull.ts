@@ -1,7 +1,18 @@
-import styled from "styled-components";
+import { fade } from "@material-ui/core";
+import styled, { keyframes } from "styled-components";
+import { motion } from "framer-motion";
+const fadein = keyframes`
+0%{
+  opacity: 0;
+}
+100%{
+  opacity: 1;
+}
+`;
 
-export const wrapper = styled.div`
+export const wrapper = styled(motion.div)`
   background-color: white;
+  /* animation: ${fadein} 1s forwards; */
   position: absolute;
   left: 0;
   top: 0;

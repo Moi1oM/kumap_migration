@@ -14,10 +14,7 @@ export default function FacilityGroup({
       <>
         <S.cateH4>{category}</S.cateH4>
         {facs.map((fac) => (
-          <TitleAndName
-            title={fac.fields.facility_name}
-            name={fac.fields.facility_loc}
-          />
+          <TitleAndName title={fac.facility_name_ko} name={fac.facility_loc} />
         ))}
       </>
     );

@@ -11,7 +11,7 @@ import {
   modalThirdState,
   searchFullState,
 } from "../constants/atom";
-
+import { AnimatePresence } from "framer-motion";
 export default function SearchFull({ indexMap }: { indexMap: any }) {
   const [buildingList, setBuildingList] = useRecoilState(allBuildingState);
   const [fullBuildingList, setFullBuildingList] = useState<any[]>([]);
@@ -25,11 +25,11 @@ export default function SearchFull({ indexMap }: { indexMap: any }) {
 
   const dataFetch = async () => {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/building_list`)
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/buildings/all`)
       .then(function (res) {
         const { data } = res;
         //console.log("searchfull", data);
-        const buliding_info = JSON.parse(data.building);
+        const buliding_info = data;
         // console.log("buliding_info", buliding_info);
         setBuildingList(buliding_info);
         setFullBuildingList(buliding_info);
@@ -48,7 +48,7 @@ export default function SearchFull({ indexMap }: { indexMap: any }) {
     let newBulidings: any[] = [];
     let ss: string = search.toUpperCase();
     for (let i = 0; i < buildingList.length; i++) {
-      const n: string = buildingList[i]["fields"]["building_name"];
+      const n: string = buildingList[i]["building_name_ko"];
       if (n.toUpperCase().indexOf(ss) > -1) {
         newBulidings.push(buildingList[i]);
       }
@@ -64,14 +64,14 @@ export default function SearchFull({ indexMap }: { indexMap: any }) {
     setModalSecond(false);
     setModalThird(false);
     indexMap.zoom = 18;
-    indexMap.panTo({ lat: b.fields.building_lat, lng: b.fields.building_lon });
+    indexMap.panTo({ lat: Number(b.latitude), lng: Number(b.longitude) });
     setModalPk(b.pk);
     setModalFirst(true);
     setSearchFull(false);
   };
 
   return (
-    <>
+    <AnimatePresence>
       <S.wrapper>
         <S.header>
           <S.closeBtn onClick={closeSearchFull} src="/modal/close_button.png" />
@@ -85,18 +85,18 @@ export default function SearchFull({ indexMap }: { indexMap: any }) {
         </S.header>
         <S.choice>
           {fullBuildingList?.map((building) => (
-            <S.itemDiv key={building["pk"]}>
+            <S.itemDiv key={building["id"]}>
               <S.buildName
                 onClick={() => {
                   moveToFirstModal(building);
                 }}
               >
-                {building["fields"]["building_name"]}
+                {building["building_name_ko"]}
               </S.buildName>
             </S.itemDiv>
           ))}
         </S.choice>
       </S.wrapper>
-    </>
+    </AnimatePresence>
   );
 }

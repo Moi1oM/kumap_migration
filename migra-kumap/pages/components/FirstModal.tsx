@@ -42,11 +42,11 @@ export default function FirstModal() {
     //   `${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${modalPk}`
     // );
     await axios
-      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/detail_ajax/${modalPk}`)
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/buildings/${modalPk}`)
       .then(function (res) {
-        // console.log(res);
+        // console.log("----&&&&&&&$$$------", res);
         // console.log(res.data.name);
-        setName(res.data.name);
+        setName(res.data.building_name_ko);
       })
       .catch((err) => {
         console.log("에러", err);

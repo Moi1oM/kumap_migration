@@ -1,4 +1,12 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+export const fadein = keyframes`
+0%{
+  opacity: 0;
+}
+100%{
+  opacity: 1;
+}
+`;
 
 export const top_modal_container = styled.div`
   position: relative;
@@ -126,30 +134,33 @@ export const columnFlex = styled.div`
 export const modalP = styled.p`
   position: relative;
   font-size: 20px;
-  visibility: none;
+  display: none;
   cursor: pointer;
   opacity: 0;
   color: white;
   &.active {
-    visibility: visible;
-    opacity: 1;
-    transition-delay: 0.34s;
+    display: block;
   }
+  animation: ${fadein} 0.5s 0.5s forwards;
 `;
 
 export const mySelect = styled.select`
   display: none;
   box-sizing: border-box;
-  width: 100px;
+  width: calc(100% - 50px);
   padding: 4px;
   font-size: 14px;
+  border: 1px solid white;
+  color: white;
+  padding: 0.4rem;
+  background: transparent;
   border-radius: 6px;
   opacity: 0;
   &.activeSelect {
     display: block;
     transition-delay: 0.45s;
-    opacity: 1;
   }
+  animation: ${fadein} 0.5s 0.4s forwards;
 `;
 
 export const myOption = styled.option`

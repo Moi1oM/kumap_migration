@@ -45,20 +45,20 @@ const Post = () => {
   const { id } = router.query;
   const dataFetch = async () => {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/entrance/${pk}`)
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/entrances/${pk}`)
       .then(function (res) {
         // console.log(res);
-        const entrancesData = JSON.parse(res.data.entrances);
+        const entrancesData = res.data;
         console.log("entrances data", entrancesData);
         entrancesData.map((entrance: any) => {
           console.log(
-            `entrance/${entrance.fields.entrance_name.substr(0, 1)}.png`,
+            `entrance/${entrance.entrance_name.substr(0, 1)}.png`,
             entrance.pk
           );
         });
-        setName(res.data.buildingName);
-        setLat(res.data.building_lat);
-        setLon(res.data.building_lon);
+        setName(res.data.building_name_ko);
+        setLat(res.data.latitude);
+        setLon(res.data.longitude);
         setEntrances(JSON.parse(res.data.entrances));
         setSchoolj(res.data.schoolj);
       })

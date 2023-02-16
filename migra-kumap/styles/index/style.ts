@@ -19,35 +19,49 @@ const ToInvertImg = (isActive: boolean) => {
 export const CategoryImg = styled.img<{ isActive: boolean }>`
   width: 15%;
   height: 10px;
+  margin-right: 3px;
 `;
 
 export const CategoryBtn = styled.button<{ isActive: boolean }>`
   min-width: 70px;
+  padding: 0.3rem;
+  width: auto;
   height: 30px;
   border-color: white;
   border-radius: 22px;
   margin-right: 5px;
-
+  border: 1px solid #eee;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: 0.2s;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
   color: ${(props) => (props.isActive ? "white" : "black")};
   background-color: ${(props) => (props.isActive ? "#BE4238" : "white")};
 `;
 
 export const CategoryBox = styled.div`
   position: absolute;
+  width: 100%;
+  overflow-x: scroll;
   top: 95px;
   left: 0px;
-
+  padding: 0 0 1rem 0;
   display: inline-block;
   white-space: nowrap;
   overflow: auto;
-  /* z-index: 10; */
-
-  width: 86%;
+  z-index: 10;
   height: 40px;
 
-  left: 7%;
-  right: 7%;
-
+  /* left: 7%;
+  right: 7%; */
+  & button:first-child {
+    margin-left: 7%;
+  }
+  & button:last-child {
+    margin-right: 7%;
+  }
   &::-webkit-scrollbar {
     display: none;
   }

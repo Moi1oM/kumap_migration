@@ -26,7 +26,7 @@ const Post = () => {
 
   const dataFetch = async () => {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/facility/${pk}`)
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/facilities/${pk}`)
       .then(function (res) {
         const { data } = res;
         const building = JSON.parse(data.building);

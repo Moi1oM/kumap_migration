@@ -29,11 +29,11 @@ export default function SecondSearchFull() {
 
   const dataFetch = async () => {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/building_list`)
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/buildings/all`)
       .then(function (res) {
         const { data } = res;
         // console.log("searchfull", data);
-        const buliding_info = JSON.parse(data.building);
+        const buliding_info = data;
         // console.log("buliding_info", buliding_info);
         setBuildingList(buliding_info);
         setFullBuildingList(buliding_info);

@@ -3,7 +3,12 @@ import axios from "axios";
 import { atom } from "recoil";
 import OverlayView from "./OverlayView";
 import { useRecoilState } from "recoil";
-import { clickedBuildingState, All, isFMarkerClicked } from "../constants/atom";
+import {
+  clickedBuildingState,
+  All,
+  isFMarkerClicked,
+  IsFloorLoaded,
+} from "../constants/atom";
 import * as S from "@/styles/index/style";
 import { MarkerContainer } from "@/styles/entrance/style";
 
@@ -13,13 +18,16 @@ interface FloorMarkerProps {
 
 export default function FloorMarker({ map }: FloorMarkerProps) {
   const [facilities, setFacilities] = useState([]);
+  const [isFloor, setIsFloor] = useRecoilState(IsFloorLoaded);
 
   /*-- 모든 시설 데이터 받기 --*/
   const dataFetch = async () => {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/facility_list`)
-      .then((res) => {
-        setFacilities(JSON.parse(res.data.facility));
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/facilities`)
+      .then(function (res) {
+        const { data } = res;
+        // console.log(data);
+        setFacilities(data);
       })
       .catch((err) => {
         console.log("에러", err);
@@ -43,10 +51,11 @@ export default function FloorMarker({ map }: FloorMarkerProps) {
   /*--클릭된 빌딩과 선택된 카테고리에 맞는 시설의 층수 필터링--*/
   if (clickedBuilding) {
     for (let facility of facilities) {
-      let temp = facility["fields"];
+      let temp = facility;
+      // console.log("~~~~~", temp);
 
-      if (temp["building_id"] == clickedBuilding["pk"]) {
-        if (temp["category"] == activeCate) {
+      if (temp["id"] == clickedBuilding["id"]) {
+        if (temp["facility_category"] == activeCate) {
           facility_loc.push(temp["facility_loc"]);
         }
       }
@@ -61,7 +70,7 @@ export default function FloorMarker({ map }: FloorMarkerProps) {
           facility_floor.push(floor[hint - 1]);
         }
       } else {
-        facility_floor.push("*"); //예외처리 (층수표기X)
+        facility_floor.push("***"); //예외처리 (층수표기X)
       }
     }
   }
@@ -75,13 +84,14 @@ export default function FloorMarker({ map }: FloorMarkerProps) {
 
   console.log(facility_floor, "=======");
 
+  setIsFloor(final_floor);
   return (
     <>
       {map && activeCate && isFMarkerClicekd && clickedBuilding && (
         <OverlayView
           position={{
-            lat: clickedBuilding["fields"]["building_lat"] as number,
-            lng: clickedBuilding["fields"]["building_lon"] as number,
+            lat: Number(clickedBuilding["latitude"]),
+            lng: Number(clickedBuilding["longitude"]),
           }}
           map={map}
           zIndex={20}
@@ -91,7 +101,7 @@ export default function FloorMarker({ map }: FloorMarkerProps) {
               <S.FloorMarkerImg src={iconpath_mini} />
             </S.FloorMarkerIcon>
             <S.FloorMarkerFont1>
-              {clickedBuilding["fields"]["building_name"]}
+              {clickedBuilding["building_name_ko"]}
             </S.FloorMarkerFont1>
             <S.FloorMarkerFont2>{final_floor}</S.FloorMarkerFont2>
           </S.FloorMarkerBox>

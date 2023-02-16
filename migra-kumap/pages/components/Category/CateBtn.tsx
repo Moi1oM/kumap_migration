@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 
 import styled from "styled-components";
-import * as S from "../../../styles/index/style";
+import * as S from "styles/index/style";
 
 import {
   allBuildingState,
@@ -48,38 +48,45 @@ export default function CateBtn({
     useRecoilState(isFMarkerClicked);
 
   /*-- 데이터 받아오기 --*/
-  const api_urls = [
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/building_list`,
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/facility_list`,
-  ];
 
-  const requests = api_urls.map((url) => axios.get(url));
-  const dataFetch = async () => {
-    axios.all(requests).then((res) => {
-      res.forEach((item) => {
-        if (item.data.building) {
-          const building_info = JSON.parse(item.data.building);
-          console.log(building_info);
-          setBuildingList(building_info);
-        }
-        if (item.data.facility) {
-          const facility_info = JSON.parse(item.data.facility);
-          console.log(facility_info);
-          setFacilities(facility_info);
-        }
+  const dataFetch1 = async () => {
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/buildings/all`)
+      .then(function (res) {
+        const { data } = res;
+        // console.log(data);
+        // console.log(data[0]["latitude"]);
+        // console.log(data[0]["longitude"]);
+        setBuildingList(data);
+      })
+      .catch((err) => {
+        console.log("에러", err);
       });
-    });
+  };
+
+  const dataFetch2 = async () => {
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/v1/facilities`)
+      .then(function (res) {
+        const { data } = res;
+        // console.log(data);
+        setFacilities(data);
+      })
+      .catch((err) => {
+        console.log("에러", err);
+      });
   };
 
   useEffect(() => {
-    dataFetch();
+    dataFetch1();
+    dataFetch2();
   }, []);
 
   /*-- 선택된 카테고리에 맞게 건물 필터링 후 반환 --*/
   const filterCate = (facilityList: any, choice: string) => {
     //카테고리에 맞는 시설 필터링
     const temp = facilityList.filter(
-      (item: any) => item.fields.category === choice
+      (item: any) => item.facility_category === choice
     );
     console.log("활성화된 카테고리의 시설들", temp);
 
@@ -91,8 +98,8 @@ export default function CateBtn({
     let selected_buildings: any = [];
 
     for (let i in temp) {
-      facility_in.push(temp[i]["fields"]["building_id"]);
-      let floor = temp[i]["fields"]["facility_loc"];
+      facility_in.push(temp[i]["id"]);
+      let floor = temp[i]["facility_loc"];
 
       if (floor.includes("층")) {
         let hint = floor.indexOf("층");
@@ -114,13 +121,13 @@ export default function CateBtn({
     //pk기준으로 필터링
     for (let i in facility_in) {
       buildingList.map((item: any) => {
-        if (item["pk"] === facility_in[i]) {
+        if (item["id"] === facility_in[i]) {
           selected_buildings = selected_buildings.concat(item);
         }
       });
     }
 
-    //console.log(selected_buildings, choice, "그 시설들이 위치한 건물");
+    console.log(selected_buildings, choice, "그 시설들이 위치한 건물");
     setCateBuilding(selected_buildings);
   };
 
@@ -140,7 +147,7 @@ export default function CateBtn({
         setFMarkerClicekd(false);
       }}
     >
-      <S.CategoryImg src={iconpath} />
+      <S.CategoryImg src={iconpath} isActive={isActive} />
       {name}
     </S.CategoryBtn>
   );
