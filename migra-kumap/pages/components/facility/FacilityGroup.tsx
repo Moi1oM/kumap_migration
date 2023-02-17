@@ -8,13 +8,17 @@ export default function FacilityGroup({
   category: string;
   facs: any[];
 }) {
-  console.log("group", category, facs);
+  // console.log("group", category, facs);
   if (facs.length > 0) {
     return (
       <>
         <S.cateH4>{category}</S.cateH4>
         {facs.map((fac) => (
-          <TitleAndName title={fac.facility_name_ko} name={fac.facility_loc} />
+          <TitleAndName
+            title={fac.facility_name_ko}
+            name={fac.facility_loc}
+            key={fac.id}
+          />
         ))}
       </>
     );

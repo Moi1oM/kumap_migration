@@ -113,3 +113,12 @@ export const BackMarker = styled.img`
   top: 0;
   cursor: pointer;
 `;
+
+export const noFac = styled.h3`
+  font-size: 80%;
+  margin-top: 10vh;
+`;
+export const noHist = styled.h3`
+  font-size: 80%;
+  margin-top: 2vh;
+`;

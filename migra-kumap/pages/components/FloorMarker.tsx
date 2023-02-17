@@ -82,7 +82,7 @@ export default function FloorMarker({ map }: FloorMarkerProps) {
     final_floor = facility_floor[0] + "F";
   }
 
-  console.log(facility_floor, "=======");
+  // console.log(facility_floor, "=======");
 
   setIsFloor(final_floor);
   return (

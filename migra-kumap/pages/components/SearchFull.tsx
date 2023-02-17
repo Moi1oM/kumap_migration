@@ -65,7 +65,7 @@ export default function SearchFull({ indexMap }: { indexMap: any }) {
     setModalThird(false);
     indexMap.zoom = 18;
     indexMap.panTo({ lat: Number(b.latitude), lng: Number(b.longitude) });
-    setModalPk(b.pk);
+    setModalPk(b.id);
     setModalFirst(true);
     setSearchFull(false);
   };
